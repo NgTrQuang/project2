@@ -8,7 +8,6 @@ const YourComponent = () => {
   const navigate = useNavigate(); // Nếu bạn sử dụng React Router
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
     logout();
     toast.success('Đăng xuất thành công!', {
         position: "top-right",

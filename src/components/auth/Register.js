@@ -75,7 +75,7 @@ const Register = () => {
   return (
     <div className="container py-16">
       <div className="max-w-lg mx-auto shadow px-6 py-7 rounded overflow-hidden">
-        <h2 className="text-2xl uppercase font-medium mb-1">Register</h2>
+        <h2 className="text-2xl uppercase font-medium mb-1">Đăng ký</h2>
         <form onSubmit={handleSubmit} autoComplete="off">
           <div className="space-y-2">
             <div>
@@ -86,7 +86,7 @@ const Register = () => {
                 type="text"
                 id="username"
                 className="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
-                placeholder="your username"
+                placeholder="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
@@ -100,7 +100,7 @@ const Register = () => {
                 type="email"
                 id="email"
                 className="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
-                placeholder="your email"
+                placeholder="example@gmail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -128,7 +128,7 @@ const Register = () => {
                 type="text"
                 id="fullName"
                 className="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
-                placeholder="Your full name"
+                placeholder="Trần Văn A"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
               />
@@ -141,7 +141,7 @@ const Register = () => {
                 type="text"
                 id="address"
                 className="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
-                placeholder="Your address"
+                placeholder="123/6, đường 3/2, Xuân Khánh, Ninh Kiều, Cần Thơ"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
               />
@@ -154,7 +154,7 @@ const Register = () => {
                 type="text"
                 id="phoneNumber"
                 className="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded focus:ring-0 focus:border-primary placeholder-gray-400"
-                placeholder="Your phone number"
+                placeholder="0123456789"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
               />

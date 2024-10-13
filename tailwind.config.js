@@ -8,7 +8,10 @@
 // }
 
 module.exports = {
-  content: ["./public/**/*.{html, js}"],
+  content: [
+    "./public/**/*.{html, js}",
+    "./src/**/*.{js,jsx,ts,tsx}"
+  ],
 
   theme: {
     screen: {

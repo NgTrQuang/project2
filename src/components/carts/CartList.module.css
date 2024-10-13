@@ -1,0 +1,38 @@
+/* styles.module.css */
+.itemOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Khoảng cách giữa các dropdown */
+}
+
+.dropdownGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.dropdownLabel {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 5px; /* Khoảng cách giữa nhãn và dropdown */
+  color: #333; /* Màu chữ của nhãn */
+}
+
+.dropdownSelect {
+  width: 100%; /* Đảm bảo dropdown chiếm đủ chiều rộng */
+  padding: 8px; /* Tăng padding cho dropdown */
+  border: 2px solid #ccc; /* Đường viền */
+  border-radius: 5px; /* Bo góc */
+  background-color: #fff; /* Màu nền dropdown */
+  transition: border-color 0.3s ease; /* Hiệu ứng chuyển đổi khi hover */
+}
+
+.dropdownSelect:hover {
+  border-color: #007bff; /* Đổi màu viền khi hover */
+}
+
+.dropdownSelect:focus {
+  outline: none;
+  border-color: #007bff; /* Đổi màu viền khi focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Hiệu ứng đổ bóng khi focus */
+}
