@@ -1,7 +1,8 @@
-require('dotenv').config();
-const cors = require('cors');
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
+require('dotenv').config();
+
 const app = express();
 const port = 3000;
 
@@ -9,9 +10,12 @@ const port = 3000;
 const authRouter = require('./routers/authRouter'); // Import router
 const userRouter = require('./routers/userRouter');
 const productRouter = require('./routers/productRouter');
+const favoriteRoter = require('./routers/favoriteRoter');
+const cartRouter = require('./routers/cartRouter');
+const orderRouter = require('./routers/orderRouter');
+const paymentRouter = require('./routers/paymentRouter');
 
-app.use(cors()); // Cho phép CORS cho tất cả các miền
-
+app.use(cors());
 // Middleware để parse JSON body
 app.use(express.json());
 
@@ -24,6 +28,10 @@ mongoose.connect('mongodb://localhost:27017/database1')
 app.use('/api', authRouter);
 app.use('/api/users', userRouter);
 app.use('/api/products', productRouter);
+app.use('/api/favorites', favoriteRoter);
+app.use('/api/cart', cartRouter);
+app.use('/api/orders', orderRouter);
+app.use('/api/payment', paymentRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

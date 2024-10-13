@@ -1,3 +1,4 @@
+const { default: mongoose } = require('mongoose');
 const Product = require('../models/products/products');
 
 // Thêm sản phẩm mới
@@ -57,6 +58,35 @@ const getProductByIdCurrent = async (req, res) => {
     }
 };
 
+// Lấy sản phẩm theo thể loại
+const getProductsByCategory = async (req, res) => {
+  try {
+    const category= req.query.category; // Lấy thể loại từ query parameter
+    console.log('Category ID:', category);
+    console.log('Is Valid ID:', mongoose.Types.ObjectId.isValid(category));
+
+    if (!category) {
+      return res.status(400).json({ message: 'Vui lòng cung cấp thể loại sản phẩm' });
+    }
+
+    // Tìm sản phẩm theo category_id
+    const products = await Product.find({ 
+      category: category,
+      isDeleted: false // Chỉ lấy các sản phẩm không bị xóa 
+    });
+
+    console.log('Products:', products);
+
+    if (products.length === 0) {
+      return res.status(404).json({ message: 'Không tìm thấy sản phẩm trong thể loại này' });
+    }
+
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ message: 'Lỗi server', error: error.message });
+  }
+};
+
 // Cập nhật sản phẩm
 const updateProduct = async (req, res) => {
   try {
@@ -106,10 +136,39 @@ const sofeDeleteProduct = async (req, res) => {
     }
 };
 
+// const getProductsByPage = async (req, res) => {
+//   const page = parseInt(req.query.page) || 1;
+//   const limit = parseInt(req.query.limit) || 10;
+//   const searchTerm = req.query.search || ''; // Lọc theo từ khóa tìm kiếm
+
+//   const skip = (page - 1) * limit;
+
+//   try {
+//     // Áp dụng tìm kiếm và phân trang
+//     const query = searchTerm ? { name: new RegExp(searchTerm, 'i') } : {};
+    
+//     const products = await Product.find(query)
+//       .skip(skip)
+//       .limit(limit);
+    
+//     const totalProducts = await Product.countDocuments(query);
+
+//     res.json({
+//       products,
+//       totalPages: Math.ceil(totalProducts / limit),
+//       currentPage: page,
+//     });
+//   } catch (error) {
+//     res.status(500).json({ error: 'Lỗi server khi lấy danh sách sản phẩm.' });
+//   }
+// };
+
 module.exports = {
   addProduct,
   getProducts,
   getProductsCurrent,
+  getProductsByCategory,
+  // getProductsByPage,
   getProductById,
   getProductByIdCurrent,
   updateProduct,

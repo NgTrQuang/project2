@@ -4,6 +4,7 @@ const {
   addProduct,
   getProducts,
   getProductsCurrent,
+  getProductsByCategory,
   getProductById,
   getProductByIdCurrent,
   updateProduct,
@@ -18,6 +19,8 @@ router.post('/', addProduct);
 router.get('/', getProducts);
 // Route lấy tất cả sản phẩm hiện tại
 router.get('/current', getProductsCurrent);
+// Route lấy sản phẩm theo thể loại ID
+router.get('/category', getProductsByCategory);
 
 // Route lấy chi tiết sản phẩm theo ID
 router.get('/:id', getProductById);
