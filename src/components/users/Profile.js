@@ -12,6 +12,15 @@ import OrderDelivered from './OrderDelivered';
 import OrderCanceled from './OrderCancel';
 import OrderProcessing from './OrderProcessing';
 import OrderShipping from './OrderShipping';
+import UserList from '../admin/users/UserList';
+import OrderAllPending from '../admin/orders/OrderAllPending';
+import OrderAllProcessing from '../admin/orders/OrderAllProcessing';
+import OrderAllShipping from '../admin/orders/OrderAllShipping';
+import OrderAllDelivered from '../admin/orders/OrderAllDelivered';
+import OrderAllCancel from '../admin/orders/OrderAllCancel';
+import OrderListPage from '../admin/orders/OrderListPage';
+import Products from '../admin/products/Products';
+import Statistics from '../admin/statistics/Statistics';
 
 const Profile = () => {
   const { user } = useUserContext();
@@ -80,7 +89,7 @@ const Profile = () => {
                   className={`block ${activeTab === 'processing' ? 'text-primary' : 'text-gray-600'} transition`}
                   onClick={() => setActiveTab('processing')}
                 >
-                  Đang xử lý
+                  Đã xác nhận
                 </a>
                 <a 
                   href="#" 
@@ -107,15 +116,95 @@ const Profile = () => {
                   Đánh giá của bạn
                 </a> */}
               </div>
-
-              <div className="pt-4 space-y-1">
-                <a href="#" className="block font-medium text-gray-700 hover:text-primary transition">
-                  Phương thức thanh toán
-                </a>
-                <a href="#" className="block text-gray-600 hover:text-primary transition">
-                  Voucher
-                </a>
-              </div>
+              {/* ADMIN */}
+              {user?.role === 'admin' &&
+              <>
+                <div className="pt-4 space-y-1">
+                  <a href="#" className="block font-medium text-gray-700 hover:text-primary transition">
+                    Quản lý người dùng
+                  </a>
+                  <a 
+                    href="#" 
+                    className={`block ${activeTab === 'manageUser' ? 'text-primary' : 'text-gray-600'} transition`}
+                    onClick={() => setActiveTab('manageUser')}
+                  >
+                    Danh sách người dùng
+                  </a>
+                </div>
+                <div className="pt-4 space-y-1">
+                  <a href="#" className="block font-medium text-gray-700 hover:text-primary transition">
+                    Quản lý sản phẩm
+                  </a>
+                  <a 
+                    href="#" 
+                    className={`block ${activeTab === 'manageProduct' ? 'text-primary' : 'text-gray-600'} transition`}
+                    onClick={() => setActiveTab('manageProduct')}
+                  >
+                    Danh sách sản phẩm
+                  </a>
+                </div>
+                <div className="pt-4 space-y-1">
+                  <a href="#" className="block font-medium text-gray-700 hover:text-primary transition">
+                    Quản lý đơn hàng
+                  </a>
+                  <a 
+                    href="#" 
+                    className={`block ${activeTab === 'manageOrder' ? 'text-primary' : 'text-gray-600'} transition`}
+                    onClick={() => setActiveTab('manageOrder')}
+                  >
+                    Tất cả các đơn hàng
+                  </a>
+                  <a 
+                    href="#" 
+                    className={`block ${activeTab === 'manageOrderPending' ? 'text-primary' : 'text-gray-600'} transition`}
+                    onClick={() => setActiveTab('manageOrderPending')}
+                  >
+                    Đơn hàng chờ xử lý
+                  </a>
+                  <a 
+                    href="#" 
+                    className={`block ${activeTab === 'manageOrderProcessing' ? 'text-primary' : 'text-gray-600'} transition`}
+                    onClick={() => setActiveTab('manageOrderProcessing')}
+                  >
+                    Đơn hàng đã xác nhận
+                  </a>
+                  <a 
+                    href="#" 
+                    className={`block ${activeTab === 'manageOrderShipping' ? 'text-primary' : 'text-gray-600'} transition`}
+                    onClick={() => setActiveTab('manageOrderShipping')}
+                  >
+                    Đơn hàng đang vận chuyển
+                  </a>
+                  <a 
+                    href="#" 
+                    className={`block ${activeTab === 'manageOrderDelivered' ? 'text-primary' : 'text-gray-600'} transition`}
+                    onClick={() => setActiveTab('manageOrderDelivered')}
+                  >
+                    Đơn hàng đã giao
+                  </a>
+                  <a 
+                    href="#" 
+                    className={`block ${activeTab === 'manageOrderCanceled' ? 'text-primary' : 'text-gray-600'} transition`}
+                    onClick={() => setActiveTab('manageOrderCanceled')}
+                  >
+                    Đơn hàng đã hủy
+                  </a>
+                </div>
+                <div className="pt-4 space-y-1">
+                  <a href="#" className="block font-medium text-gray-700 hover:text-primary transition">
+                    Báo cáo thống kê
+                  </a>
+                  <a 
+                    href="#" 
+                    className={`block ${activeTab === 'statistics' ? 'text-primary' : 'text-gray-600'} transition`}
+                    onClick={() => setActiveTab('statistics')}
+                  >
+                    Thống kê
+                  </a>
+                </div>
+              </>
+              }
+              {/* ADMIN */}
 
               {/* <div className="pt-4 space-y-1">
                 <a href="#" className="block font-medium text-gray-700 hover:text-primary transition">
@@ -139,7 +228,20 @@ const Profile = () => {
           {activeTab === 'processing' && <OrderProcessing />} {/* Hiển thị đơn hàng */}
           {activeTab === 'shipping' && <OrderShipping />} {/* Hiển thị đơn hàng */}
           {activeTab === 'delivered' && <OrderDelivered />} {/* Hiển thị đơn hàng */}
-          {activeTab === 'canceled' && <OrderCanceled />} {/* Hiển thị đơn hàng */}          
+          {activeTab === 'canceled' && <OrderCanceled />} {/* Hiển thị đơn hàng */}  
+
+          {activeTab === 'manageUser' && <UserList />} {/* Hiển thị đơn hàng */} 
+
+          {activeTab === 'manageProduct' && <Products />} {/* Hiển thị đơn hàng */}     
+
+          {activeTab === 'manageOrder' && <OrderListPage />} {/* Hiển thị đơn hàng */}  
+          {activeTab === 'manageOrderPending' && <OrderAllPending />} {/* Hiển thị đơn hàng */}  
+          {activeTab === 'manageOrderProcessing' && <OrderAllProcessing />} {/* Hiển thị đơn hàng */}  
+          {activeTab === 'manageOrderShipping' && <OrderAllShipping />} {/* Hiển thị đơn hàng */}  
+          {activeTab === 'manageOrderDelivered' && <OrderAllDelivered />} {/* Hiển thị đơn hàng */}
+          {activeTab === 'manageOrderCanceled' && <OrderAllCancel />} {/* Hiển thị đơn hàng */}     
+
+          {activeTab === 'statistics' && <Statistics />} {/* Hiển thị đơn hàng */}  
         </div>
       </div>
     </div>

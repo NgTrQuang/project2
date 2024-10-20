@@ -4,18 +4,25 @@ import ReactQuill from 'react-quill'; // Để sử dụng rich text editor cho 
 import 'react-quill/dist/quill.snow.css'; // Import CSS của Quill
 import { storage } from '../../../common/firebaseConfig'; // Import storage từ Firebase
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+// import { useParams } from 'react-router-dom'; // Dùng useParams để lấy ID sản phẩm
 
-const ProductForm = () => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
-  const [category, setCategory] = useState('');
-  const [categories, setCategories] = useState([]); // Danh sách các danh mục
-  const [variants, setVariants] = useState([{ color: '', size: '', stock: '' }]);
+const ProductEditForm = ({ selectedProduct, setSelectedProduct }) => {
+    console.log('selectedProduct: ', selectedProduct)
+//   const { productId } = useParams(); // Lấy ID sản phẩm từ URL
+//   const history = useHistory(); // Dùng useHistory để điều hướng sau khi lưu sản phẩm
+  const [name, setName] = useState(selectedProduct.name);
+  const [description, setDescription] = useState(selectedProduct.description);
+  const [price, setPrice] = useState(selectedProduct.price);
+  const [category, setCategory] = useState(selectedProduct?.category._id);
+  const [categories, setCategories] = useState([]);
+  const [variants, setVariants] = useState(selectedProduct.variants);
+
+  const [oldImages, setOldImages] = useState(selectedProduct.image);
+  const [newImages, setNewImages] = useState([]);
+
+  const [selectedImages, setSelectedImages] = useState([]);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const [images, setImages] = useState([]); // Thêm state để lưu trữ hình ảnh
-  const [selectedImages, setSelectedImages] = useState([]);
 
   // Lấy danh sách các danh mục từ server
   useEffect(() => {
@@ -31,39 +38,61 @@ const ProductForm = () => {
     fetchCategories();
   }, []);
 
+  // Lấy thông tin sản phẩm từ API
+//   useEffect(() => {
+//     const fetchProduct = async () => {
+//       try {
+//         const response = await axios.get(`http://localhost:3000/api/products/${productId}`);
+//         const product = response.data;
+//         setName(product.name);
+//         setDescription(product.description);
+//         setPrice(product.price);
+//         setCategory(product.category);
+//         setVariants(product.variants);
+//         setSelectedImages(product.image); // Chỉ cần đặt lại selectedImages với URL đã tải lên
+//       } catch (err) {
+//         console.error('Error fetching product:', err);
+//         setError('Product not found!');
+//       }
+//     };
+
+//     fetchProduct();
+//   }, [productId]);
+
   // Hàm xử lý thay đổi hình ảnh
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     if (files) {
-      // setImages(files);
-      setImages((prevImages) => [...prevImages, ...files]);
+      setNewImages((prevImages) => [...prevImages, ...files]);
       const imageUrls = files.map((file) => URL.createObjectURL(file));
-      // setSelectedImages(imageUrls);
       setSelectedImages((prevSelectedImages) => [...prevSelectedImages, ...imageUrls]);
     }
   };
 
   // Hàm xóa hình ảnh khỏi danh sách đã chọn
   const removeImage = (indexToRemove) => {
-    setImages(images.filter((_, index) => index !== indexToRemove));
+    setNewImages(newImages.filter((_, index) => index !== indexToRemove));
     setSelectedImages(selectedImages.filter((_, index) => index !== indexToRemove));
   };
-  
+
+  const removeOldImage = (indexToRemove) => {
+    setOldImages(oldImages.filter((_, index) => index !== indexToRemove));
+  }
   // Hàm tải lên hình ảnh lên Firebase Storage
   const uploadImages = async () => {
     const uploadedImageUrls = [];
 
-    for(let i = 0; i < images.length; i++){
+    for (let i = 0; i < newImages.length; i++) {
       try {
-        const storageRef = ref(storage, `images/products/${images[i].name}`);
-        const snapshot = await uploadBytes(storageRef, images[i]);
+        const storageRef = ref(storage, `images/products/${newImages[i].name}`);
+        const snapshot = await uploadBytes(storageRef, newImages[i]);
         const imageUrl = await getDownloadURL(snapshot.ref);
         uploadedImageUrls.push(imageUrl);
         await new Promise(resolve => setTimeout(resolve, 1000));
       } catch (err) {
         console.error("Error uploading image:", err);
       }
-    } 
+    }
     return uploadedImageUrls;
   };
 
@@ -89,28 +118,26 @@ const ProductForm = () => {
 
     // Tải lên hình ảnh và lấy URL
     const imageUrls = await uploadImages();
+    const combinedImages = [...oldImages, ...imageUrls];
 
-    const newProduct = {
+    const updatedProduct = {
       name,
       description,
       price,
       category,
       variants,
-      image: imageUrls,
+      image: combinedImages,
     };
 
     try {
-      await axios.post('http://localhost:3000/api/products', newProduct);
-      setSuccess('Thêm sản phẩm thành công!');
-      setName('');
-      setDescription('');
-      setPrice('');
-      setCategory('');
-      setVariants([{ color: '', size: '', stock: '' }]);
-      setImages([]); 
+      const response = await axios.put(`http://localhost:3000/api/products/${selectedProduct._id}`, updatedProduct);
+      setSuccess('Sản phẩm cập nhật thành công!');
       setSelectedImages([]);
+      setOldImages(combinedImages);
+      console.log(response.data);
+    //   setSelectedProduct(response.data);
     } catch (err) {
-      setError('Failed to add product. Please try again.');
+      setError('Failed to update product. Please try again.');
     }
   };
 
@@ -146,42 +173,63 @@ const ProductForm = () => {
     'Hồng phấn': '#FF69B4',    
     'Xanh pastel': '#B0E0E6',   
     'Đỏ tươi': '#FF4500',      
-    'Xám tro': '#BEBEBE',   
-    'Tím than': '#4B0082',    
+    'Xám tro': '#BEBEBE',
+    'Tím than': '#4B0082',       
 };
 
-const sizeMapping = [
-  'XS',  
-  'S',   
-  'M',   
-  'L',   
-  'XL',  
-  'XXL', 
-  'XXXL', 
-  '4XL', 
-  '5XL', 
-  '6XL', 
-  '28',  
-  '29',  
-  '30',  
-  '31',  
-  '32',  
-  '33',  
-  '34',  
-  '36',  
-  '38',  
-  '40',  
-];
-
+  const sizeMapping = [
+    'XS',  
+    'S',   
+    'M',   
+    'L',   
+    'XL',  
+    'XXL', 
+    'XXXL', 
+    '4XL', 
+    '5XL', 
+    '6XL', 
+    '28',  
+    '29',  
+    '30',  
+    '31',  
+    '32',  
+    '33',  
+    '34',  
+    '36',  
+    '38',  
+    '40',  
+  ];
 
   return (
     <div className="p-6 max-w-4xl mx-auto border border-gray rounded-lg shadow-md">
-      <h2 className="text-2xl text-center mb-6">Thêm sản phẩm mới</h2>
+      <h2 className="text-2xl text-center mb-6">Chỉnh sửa sản phẩm</h2>
       {error && <p className="text-red-600 text-center mb-4">{error}</p>}
       {success && <p className="text-green-600 text-center mb-4">{success}</p>}
       <form onSubmit={handleSubmit}>
+        {/* Hình ảnh */}
         <div className="mb-4">
           <label className="block font-medium mb-2">Hình ảnh sản phẩm:</label>
+          {oldImages.length > 0 && (
+            <div className="mt-4 grid grid-cols-3 md:grid-cols-6 gap-4">
+              {oldImages.map((imageUrl, index) => (
+                <div key={index} className="relative">
+                  <img
+                    src={imageUrl}
+                    alt={`product_${index}`}
+                    style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeOldImage(index)}
+                    className="absolute top-0 right-0 bg-red-600 text-white p-1 rounded-full"
+                    style={{ transform: 'translate(50%, -50%)' }}
+                  >
+                    X
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
           <input
             type="file"
             multiple
@@ -192,25 +240,26 @@ const sizeMapping = [
             <div className="mt-4 grid grid-cols-3 md:grid-cols-6 gap-4">
               {selectedImages.map((imageUrl, index) => (
                 <div key={index} className="relative">
-                <img
-                  key={index}
-                  src={imageUrl}
-                  alt={`product_${index}`}
-                  style={{ width: '100px', height: '100px', objectFit: 'cover' }}
-                />
-                <button
+                  <img
+                    src={imageUrl}
+                    alt={`product_${index}`}
+                    style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                  />
+                  <button
                     type="button"
                     onClick={() => removeImage(index)}
                     className="absolute top-0 right-0 bg-red-600 text-white p-1 rounded-full"
                     style={{ transform: 'translate(50%, -50%)' }}
-                >
-                  X
-                </button>
+                  >
+                    X
+                  </button>
                 </div>
               ))}
             </div>
           )}
         </div>
+
+        {/* Tên sản phẩm */}
         <div className="mb-4">
           <label className="block font-medium mb-2">Tên sản phẩm:</label>
           <input
@@ -222,6 +271,7 @@ const sizeMapping = [
           />
         </div>
 
+        {/* Mô tả chi tiết */}
         <div className="mb-4">
           <label className="block font-medium mb-2">Mô tả chi tiết:</label>
           <ReactQuill
@@ -233,6 +283,7 @@ const sizeMapping = [
           />
         </div>
 
+        {/* Giá */}
         <div className="mb-4">
           <label className="block font-medium mb-2">Giá:</label>
           <input
@@ -245,6 +296,7 @@ const sizeMapping = [
           />
         </div>
 
+        {/* Danh mục */}
         <div className="mb-4">
           <label className="block font-medium mb-2">Danh mục:</label>
           <select
@@ -254,19 +306,53 @@ const sizeMapping = [
             className="w-full p-3 border border-gray-300 rounded-md"
           >
             <option value="">Danh mục (Thể loại)</option>
-            {categories.map((cat) => (
-              <option key={cat._id} value={cat._id}>
-                {cat.name}
+            {categories.map((category) => (
+              <option key={category._id} value={category._id}>
+                {category.name}
               </option>
             ))}
           </select>
         </div>
 
-        <div className="mb-6">
-          <h3 className="text-lg font-semibold mb-3">Các biến thể:</h3>
+        {/* Biến thể */}
+        <div className="mb-4">
+          <label className="block font-medium mb-2">Biến thể:</label>
+          {/* {variants.map((variant, index) => (
+            <div key={index} className="mb-4 flex items-center space-x-4">
+              <input
+                type="text"
+                placeholder="Màu sắc"
+                value={variant.color}
+                onChange={(e) => handleVariantChange(index, 'color', e.target.value)}
+                className="p-2 border border-gray-300 rounded-md"
+                style={{ backgroundColor: colorMapping[variant.color] || '#ffffff' }}
+              />
+              <input
+                type="text"
+                placeholder="Kích thước"
+                value={variant.size}
+                onChange={(e) => handleVariantChange(index, 'size', e.target.value)}
+                className="p-2 border border-gray-300 rounded-md"
+              />
+              <input
+                type="number"
+                placeholder="Số lượng"
+                value={variant.stock}
+                onChange={(e) => handleVariantChange(index, 'stock', e.target.value)}
+                className="p-2 border border-gray-300 rounded-md"
+              />
+              <button
+                type="button"
+                onClick={() => removeVariant(index)}
+                className="bg-red-500 text-white px-2 py-1 rounded-md"
+              >
+                Xóa
+              </button>
+            </div>
+          ))} */}
           {variants.map((variant, index) => (
-            <div key={index} className="p-4 border border-gray-300 rounded-md mb-4 flex flex-col lg:flex-row gap-4">
-              <div className="mb-4 flex-1">
+            <div key={index} className="p-4 border border-gray-300 rounded-md mb-4">
+              <div className="mb-4">
                 <label className="block font-medium mb-2">Màu sắc:</label>
                 <select
                   value={variant.color}
@@ -291,7 +377,7 @@ const sizeMapping = [
                 ></span>
               </div>
 
-              <div className="mb-4 flex-1">
+              <div className="mb-4">
                 <label className="block font-medium mb-2">Size:</label>
                 <select
                   value={variant.size}
@@ -308,7 +394,7 @@ const sizeMapping = [
                 </select>
               </div>
 
-              <div className="mb-4 flex-1">
+              <div className="mb-4">
                 <label className="block font-medium mb-2">Số lượng:</label>
                 <input
                   type="number"
@@ -323,13 +409,12 @@ const sizeMapping = [
               <button
                 type="button"
                 onClick={() => removeVariant(index)}
-                className="mt-9 bg-red-600 text-white px-4 h-10 rounded-md hover:bg-red-700"
+                className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
               >
                 Xóa biến thể
               </button>
             </div>
           ))}
-
           <button
             type="button"
             onClick={addVariant}
@@ -339,15 +424,18 @@ const sizeMapping = [
           </button>
         </div>
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700"
-        >
-          Thêm sản phẩm
-        </button>
+        {/* Nút lưu */}
+        <div className="flex justify-center">
+          <button
+            type="submit"
+            className="bg-blue-500 text-white px-6 py-3 rounded-lg"
+          >
+            Lưu sản phẩm
+          </button>
+        </div>
       </form>
     </div>
   );
 };
 
-export default ProductForm;
+export default ProductEditForm;

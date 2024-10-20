@@ -21,11 +21,11 @@ const FavoriteList = ({ userId, favoriteItems, handleRemoveFavorite }) => {
 
   return (
     <div className="col-span-9 space-y-4">
-      {favoriteItems.map((item) => (
+      {favoriteItems.length > 0 ? favoriteItems.map((item) => (
         <div key={item._id} className="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
           {/* Product Image */}
           <div className="w-28">
-            <img src={item.image} alt={item.name} className="w-full" />
+            <img src={item.image[0]} alt={item.name} className="w-full" />
           </div>
 
           {/* Product Details */}
@@ -69,7 +69,7 @@ const FavoriteList = ({ userId, favoriteItems, handleRemoveFavorite }) => {
             <FontAwesomeIcon icon={faTrash} />
           </div>
         </div>
-      ))}
+      )) : <p>Chưa có sản phẩm yêu thích</p>}
     </div>
   );
 };

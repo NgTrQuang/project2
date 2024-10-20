@@ -62,6 +62,17 @@ const ProductList = () => {         //{ onAddToCart }
   };
 
   const addToFavorites = async (productId) => {
+    if(!userId){
+      toast.info("Bạn cần đăng nhập để thêm sản phẩm vào yêu thích!", {
+        position: "top-right",
+        autoClose: 3000, // tự đóng sau 3 giây
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      return;
+    }
     try {
       await axios.post('http://localhost:3000/api/favorites/add_to_favorite', { userId, productId });
       // Show success toast notification

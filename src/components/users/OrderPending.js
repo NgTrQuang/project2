@@ -10,6 +10,7 @@ const OrderPending = () => {
   const { userId, user } = useUserContext(); // Lấy thông tin người dùng từ context
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  // const token = localStorage.getItem('token');
 
   const [currentPage, setCurrentPage] = useState(1); // Trạng thái trang hiện tại
   const [ordersPerPage] = useState(3); // Số đơn hàng trên mỗi trang
@@ -67,8 +68,46 @@ const OrderPending = () => {
     return <div>Bạn chưa có đơn hàng nào.</div>;
   }
 
+  // Hàm để hủy đơn hàng
+  const handleCancelOrder = async (orderId) => {
+    try {
+      const response = await axios.put(`http://localhost:3000/api/orders/cancel-error/${orderId}`, {}, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      // Cập nhật trạng thái đơn hàng sau khi hủy đơn
+      const updatedOrders = orders.map((order) =>
+        order._id === orderId ? { 
+            ...order, 
+            orderStatus: response.data.orderStatus, 
+            payment: { ...order.payment, status: response.data.payment.status }, 
+        } : order
+      );
+      setOrders(updatedOrders);
+    } catch (error) {
+      console.error('Lỗi khi hủy đơn hàng:', error);
+    }
+  };
+
+  const renderActionButtons = (order) => {
+    console.log('order được chọn', order);
+    if (order.payment.status === 'Chưa thanh toán'){
+      if (order.orderStatus === 'Đang xử lý' || (order.orderStatus === 'Đã xác nhận' && !order.errorTime)){
+        return (
+          <button
+            onClick={() => handleCancelOrder(order._id)}
+            className="bg-red-500 text-white px-3 py-1 rounded ml-2 mt-2"
+          >
+            Hủy đơn
+          </button>
+        );
+      }
+    }
+  };
+
   // Tách đơn hàng theo trạng thái
-  const pendingOrders = orders.filter(order => order.orderStatus === 'Chưa xử lý');
+  const pendingOrders = orders.filter(order => order.orderStatus === 'Đang xử lý');
 
   // Tính toán trang
   const indexOfLastOrder = currentPage * ordersPerPage;
@@ -83,12 +122,12 @@ const OrderPending = () => {
         <div key={order._id} className="border p-4 my-2">
           <p>Mã đơn hàng: {order._id}</p>
           <div className="ml-4">
-            {order.items.map((item) => (
-              <div key={item.product._id} className="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
-                <Link to={`/products/details/${item.product._id}`} className="w-28">
-                  <img src={item.product ? item.product.image : ''} alt={item.product ? item.product.name : "Sản phẩm không khả dụng"} className="w-full" />
+            {order?.items.map((item) => (
+              <div key={item?.product?._id} className="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
+                <Link to={item?.product ? `/products/details/${item?.product?._id}` : '#'} className="w-28">
+                  <img src={item?.product ? item?.product?.image : ''} alt={item?.product ? item?.product?.name : "Sản phẩm không khả dụng"} className="w-full" />
                 </Link>
-                <p>{item.product.name}</p> {/* Giả sử bạn có tên sản phẩm ở đây */}
+                <p>{item?.product?.name}</p> {/* Giả sử bạn có tên sản phẩm ở đây */}
                 <p>{item.quantity}</p>
                 <p>{item.price.toLocaleString()} VND</p>
                 <p>{item.color}</p>
@@ -97,7 +136,9 @@ const OrderPending = () => {
             ))}
           </div>
           <p>Ngày đặt: {new Date(order.createdAt).toLocaleDateString()}</p>
-          <p>Tổng giá trị: {order.totalAmount.toLocaleString()} VND</p>          
+          <p>Tổng giá trị: {order.totalAmount.toLocaleString()} VND</p> 
+          <p>Trạng thái thanh toán: {order?.payment?.status}</p>  
+          {renderActionButtons(order)}
         </div>
       )) : (<p>Hiện đang trống</p>)
       }

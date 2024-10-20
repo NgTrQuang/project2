@@ -15,7 +15,7 @@ import AddToCartButton from '../carts/AddToCartButton';
 const RecommentProduct = () => {         //{ onAddToCart }
   const { products } = useProductContext();
   const { userId } = useUserContext();
-  const [quantity, setQuantity] = useState(1); // State để quản lý số lượng sản phẩm mặc định là 1
+  // const [quantity, setQuantity] = useState(1); // State để quản lý số lượng sản phẩm mặc định là 1
   const [suggestedProducts, setSuggestedProducts] = useState([]);
 
   // Hàm để lấy số lượng sản phẩm ngẫu nhiên từ danh sách
@@ -41,7 +41,18 @@ const RecommentProduct = () => {         //{ onAddToCart }
   };
 
   const addToFavorites = async (productId) => {
-      try {
+    if(!userId){
+      toast.info("Bạn cần đăng nhập để thêm sản phẩm vào yêu thích!", {
+        position: "top-right",
+        autoClose: 3000, // tự đóng sau 3 giây
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      return;
+    }  
+    try {
       await axios.post('http://localhost:3000/api/favorites/add_to_favorite', { userId, productId });
       // Show success toast notification
       toast.success("Sản phẩm đã được thêm vào mục yêu thích", {

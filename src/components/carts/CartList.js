@@ -20,9 +20,6 @@ const CartList = () => {
     const [totalPrice, setTotalPrice] = useState(0); // Tổng giá trị các sản phẩm được chọn
     const { userId } = useUserContext();
     const navigate = useNavigate();
-    // const [quantity, setQuantity] = useState(1); // State để lưu số lượng sản phẩm
-    // const [selectedColor, setSelectedColor] = useState('');
-    // const [selectedSize, setSelectedSize] = useState('');
 
     useEffect(() => {
         if (userId) {
@@ -42,7 +39,7 @@ const CartList = () => {
             // setQuantities(initialQuantities);
             setLoading(false);
         } catch (error) {
-            setError('Không thể lấy giỏ hàng');
+            // setError('Không thể lấy giỏ hàng');
             setLoading(false);
         }
     };
@@ -73,35 +70,39 @@ const CartList = () => {
     };
 
     const handleUpdateCartItem = async (userId, cartId, color, size, quantity) => {
-        try {
-            const response = await axios.put('http://localhost:3000/api/cart/update', {
-                userId: userId,
-                cartItemId: cartId,
-                color,
-                size,
-                quantity,
-            });
+        if (quantity === 0) {
+            await removeFromCart(cartId);
+        } else {
+            try {
+                const response = await axios.put('http://localhost:3000/api/cart/update', {
+                    userId: userId,
+                    cartItemId: cartId,
+                    color,
+                    size,
+                    quantity,
+                });
 
-            const updatedCartItem = response.data.cartItems.products;
+                const updatedCartItem = response.data.cartItems.products;
 
-            console.log(response.data.cartItems.products);
+                console.log(response.data.cartItems.products);
 
-            // setCartItems(prevItems => prevItems.map(item => 
-            //     item._id === updatedCartItem._id ? updatedCartItem : item
-            // ));
-            setCartItems(updatedCartItem);
-            // toast.success("Giỏ hàng đã được cập nhật", {
-            //     position: "top-right",
-            //     autoClose: 3000,
-            // });
-            if (selectedItems.includes(cartId)) {
-                calculateTotalPrice(updatedCartItem); // Cập nhật lại tổng khi sản phẩm đã chọn
+                // setCartItems(prevItems => prevItems.map(item => 
+                //     item._id === updatedCartItem._id ? updatedCartItem : item
+                // ));
+                setCartItems(updatedCartItem);
+                // toast.success("Giỏ hàng đã được cập nhật", {
+                //     position: "top-right",
+                //     autoClose: 3000,
+                // });
+                if (selectedItems.includes(cartId)) {
+                    calculateTotalPrice(updatedCartItem); // Cập nhật lại tổng khi sản phẩm đã chọn
+                }
+            } catch (error) {
+                toast.error(error.response?.data.message || "Có lỗi xảy ra khi cập nhật giỏ hàng", {
+                    position: "top-right",
+                    autoClose: 3000,
+                });
             }
-        } catch (error) {
-            toast.error(error.response?.data.message || "Có lỗi xảy ra khi cập nhật giỏ hàng", {
-                position: "top-right",
-                autoClose: 3000,
-            });
         }
     };
 
@@ -169,6 +170,8 @@ const CartList = () => {
                 ? prevSelected.filter(id => id !== cartId) // Bỏ chọn nếu đã được chọn
                 : [...prevSelected, cartId]; // Thêm vào danh sách chọn
             calculateTotalPrice();
+            // console.log(updatedSelected);
+            // console.log(selectedItems);
             return updatedSelected;
         });
     };
@@ -184,9 +187,7 @@ const CartList = () => {
 
     return (
         <div className="space-y-4">
-            {cartItems.length === 0 ? (
-                <div>Giỏ hàng trống</div>
-            ) : (
+            {cartItems && cartItems.length > 0 ? (
                 cartItems.map((item) => (
                     <div key={item._id} className="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
                         {/* Checkbox */}
@@ -197,7 +198,7 @@ const CartList = () => {
                         />
                         
                         {/* Product Image */}
-                        <Link to={`/products/details/${item.product._id}`} className="w-28">
+                        <Link to={item?.product?._id ? `/products/details/${item.product._id}` : '#'} className="w-28">
                             <img src={item.product ? item.product.image : ''} alt={item.product ? item.product.name : "Sản phẩm không khả dụng"} className="w-full" />
                         </Link>
 
@@ -246,6 +247,8 @@ const CartList = () => {
                         </div>
                     </div>
                 ))
+            ) : (
+                <p>Giỏ hàng trống</p>
             )}
             {/* Hiển thị tổng giá trị thanh toán */}
             <div className="text-right font-semibold text-lg">

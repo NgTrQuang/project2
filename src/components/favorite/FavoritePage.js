@@ -19,6 +19,7 @@ const FavoritePage = () => {
         try {
             const response = await axios.get(`http://localhost:3000/api/favorites/${userId}`);
             setFavoriteProducts(response.data);
+            console.log(response.data);
         } catch (error) {
             console.error('Lỗi khi lấy danh sách yêu thích:', error);
         }

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useUserContext } from '../context/UserContext'; // Lấy thông tin người dùng từ context
+import { useUserContext } from '../../context/UserContext'; // Lấy thông tin người dùng từ context
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
-import Pagination from '../../common/Pagination';
+import Pagination from '../../../common/Pagination';
 
-const OrderProcessing = () => {
+const OrderAllProcessing = () => {
   const { userId, user } = useUserContext(); // Lấy thông tin người dùng từ context
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,7 +18,7 @@ const OrderProcessing = () => {
     const fetchOrders = async () => {
       if (!user) return;
       try {
-        const response = await axios.get(`http://localhost:3000/api/orders/user/${userId}`, {
+        const response = await axios.get(`http://localhost:3000/api/orders/all`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}` // Thêm token vào header để xác thực
           }
@@ -77,7 +77,7 @@ const OrderProcessing = () => {
 
   return (
     <div> 
-      <h3 className="text-lg font-bold">Đơn hàng đã xác nhận</h3>
+      <h3 className="text-lg font-bold">Đơn hàng đang xử lý</h3>
       {currentOrders.length > 0 ? currentOrders.map(order => (
         <div key={order._id} className="border p-4 my-2">
         <p>Mã đơn hàng: {order._id}</p>
@@ -111,4 +111,4 @@ const OrderProcessing = () => {
   );
 };
 
-export default OrderProcessing;
+export default OrderAllProcessing;

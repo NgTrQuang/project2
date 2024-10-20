@@ -131,11 +131,15 @@ const Register = () => {
                 placeholder="Trần Văn A"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
+                required
               />
             </div>
             <div>
               <label htmlFor="address" className="text-gray-600 mb-2 block">
-                Địa chỉ
+                Địa chỉ 
+                <span className="text-yellow-500 ml-2 text-sm italic">
+                  (Bạn nên nhập đúng địa chỉ vì đây là địa chỉ giao hàng trong tương lai của bạn!)
+                </span>
               </label>
               <input
                 type="text"
@@ -144,6 +148,7 @@ const Register = () => {
                 placeholder="123/6, đường 3/2, Xuân Khánh, Ninh Kiều, Cần Thơ"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
+                required
               />
             </div>
             <div>
@@ -157,6 +162,7 @@ const Register = () => {
                 placeholder="0123456789"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
+                required
               />
             </div>
           </div>

@@ -38,7 +38,7 @@ const App = () => {
             <Route path='/' element={<Home/>}/>
             <Route path="/login" element={<PublicRoute component={Login} />} />
             {/* <Route path="/protected" element={<ProtectedRoute component={ProtectedComponent} />} /> */}
-            <Route path='/register' element={<Register/>}/>
+            <Route path='/register' element={<PublicRoute component={Register}/>}/>
             <Route path='/profile' element={<Profile/>}/>
             {/* <Route path='/address' element={<AddressSelector/>}/> */}
             <Route path='/products' element={<ProductList/>}/>

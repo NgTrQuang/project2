@@ -66,7 +66,7 @@ const OrderDelivered = () => {
     return <div>Bạn chưa có đơn hàng nào.</div>;
   }
 
-  const deliveredOrders = orders.filter(order => order.orderStatus === 'Đã giao');
+  const deliveredOrders = orders.filter(order => order.orderStatus === 'Đã nhận hàng');
 
   // Tính toán trang
   const indexOfLastOrder = currentPage * ordersPerPage;
@@ -81,12 +81,12 @@ const OrderDelivered = () => {
         <div key={order._id} className="border p-4 my-2">
         <p>Mã đơn hàng: {order._id}</p>
         <div className="ml-4">
-          {order.items.map((item) => (
-            <div key={item.product._id} className="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
-              <Link to={`/products/details/${item.product._id}`} className="w-28">
-                <img src={item.product ? item.product.image : ''} alt={item.product ? item.product.name : "Sản phẩm không khả dụng"} className="w-full" />
+          {order?.items.map((item) => (
+            <div key={item?.product?._id} className="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
+              <Link to={item?.product ? `/products/details/${item?.product?._id}` : '#'} className="w-28">
+                <img src={item?.product ? item?.product?.image : ''} alt={item?.product ? item?.product?.name : "Sản phẩm không khả dụng"} className="w-full" />
               </Link>
-              <p>{item.product.name}</p> {/* Giả sử bạn có tên sản phẩm ở đây */}
+              <p>{item?.product?.name}</p> {/* Giả sử bạn có tên sản phẩm ở đây */}
               <p>{item.quantity}</p>
               <p>{item.price.toLocaleString()} VND</p>
               <p>{item.color}</p>
@@ -96,6 +96,7 @@ const OrderDelivered = () => {
         </div>
         <p>Ngày đặt: {new Date(order.createdAt).toLocaleDateString()}</p>
         <p>Tổng giá trị: {order.totalAmount.toLocaleString()} VND</p>
+        <p>Trạng thái thanh toán: {order?.payment?.status}</p> 
       </div>
       )) : (<p>Hiện đang trống</p>)
       }

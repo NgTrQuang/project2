@@ -1,16 +1,31 @@
-import React, { useState } from 'react';
-import { useCartContext } from '../context/CartContext';
+import React, { useState, useEffect } from 'react';
+// import { useCartContext } from '../context/CartContext';
+import { toast } from 'react-toastify';
 
 const QuantitySelector = ({ quantity, onQuantityChange, onRemove, selectedColor, selectedSize, selectedProduct }) => {
-  // const [quantity, setQuantity] = useState(1);
-  // const { quantity, setQuantity } = useCartContext();
-// console.log(selectedColor);
-// console.log(selectedSize);
-// console.log(selectedProduct);
+  const [availableStock, setAvailableStock] = useState(0);
+
+  useEffect(() => {
+    setAvailableStock(getAvailableStock());
+  }, [selectedColor, selectedSize, selectedProduct]);
 
   const handleIncrease = () => {
-    if (quantity < getAvailableStock()) { // Giới hạn số lượng tối đa
+    if (!selectedColor || !selectedSize) {
+      if (!toast.isActive('color-size-error')) {
+      toast.error("Vui lòng chọn màu sắc và kích thước trước khi tăng số lượng!", {
+        toastId: 'color-size-error',
+      });
+      return;
+      }
+    }
+    if (quantity < availableStock) { // Giới hạn số lượng tối đa
       onQuantityChange(quantity + 1);
+    } else{
+      if (!toast.isActive('stock-error')) {
+      toast.error("Sản phẩm vượt quá giới hạn trong kho!", {
+        toastId: 'stock-error',
+      });
+      }
     }
   };
 
@@ -24,7 +39,6 @@ const QuantitySelector = ({ quantity, onQuantityChange, onRemove, selectedColor,
 
   const handleDecrease = () => {
     if (quantity > 1) {
-      // setQuantity(prev => prev - 1);
       onQuantityChange(quantity - 1);
     } else if (quantity === 1 && onRemove) {
       onRemove(); // Gọi hàm xóa khi số lượng về 0

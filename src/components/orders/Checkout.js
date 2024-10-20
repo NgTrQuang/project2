@@ -8,6 +8,10 @@ const Checkout = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { selectedItems, cartItems, totalPrice } = location.state || {};
+    console.log('Location state:', location.state); // Kiểm tra giá trị location.state
+    console.log('Selected Items:', selectedItems); // Kiểm tra selectedItems
+    console.log('Cart Items:', cartItems); // Kiểm tra cartItems
+    console.log('Total Price:', totalPrice); // Kiểm tra totalPrice
     const { userId, user } = useUserContext(); // Lấy userId từ context
     // const shippingAddress = "Địa chỉ mẫu"; // Thay bằng địa chỉ người dùng nhập
     const [paymentMethod, setPaymentMethod] = useState("COD");
@@ -22,6 +26,7 @@ const Checkout = () => {
                 shippingAddress: user.address, // Địa chỉ giao hàng
                 paymentMethod: paymentMethod,     // Phương thức thanh toán
                 items: selectedItems.map(id => ({
+                    _id: id,
                     product: cartItems.find(item => item._id === id).product._id,
                     quantity: cartItems.find(item => item._id === id).quantity,
                     price: cartItems.find(item => item._id === id).product.price,

@@ -52,48 +52,49 @@ const Header = () => {
             Tìm kiếm
           </button>
         </div>
-
+        {user ? (
         <div className="flex items-center space-x-4">
           <a href="/favorites" className="text-center text-gray-700 hover:text-primary transition relative">
             <div className="text-2xl">
               <i className="fa-regular fa-heart"></i>
             </div>
             <div className="text-xs leading-3">Yêu thích</div>
-            {/* <div className="absolute right-0 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-primary text-white text-xs">
-              8
-            </div> */}
           </a>
           <a href="/cart" className="text-center text-gray-700 hover:text-primary transition relative">
             <div className="text-2xl">
               <i className="fa-solid fa-bag-shopping"></i>
             </div>
             <div className="text-xs leading-3">Giỏ hàng</div>
-            {/* <div className="absolute -right-3 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-primary text-white text-xs">
-              2
-            </div> */}
           </a>
-          {/* <a href="#" className="text-center text-gray-700 hover:text-primary transition relative">
+          <a href="/profile" className="text-center text-gray-700 hover:text-primary transition relative">
             <div className="text-2xl">
               <i className="fa-regular fa-user"></i>
             </div>
-            <div className="text-xs leading-3">Account</div>
-          </a> */}
-          {user ? (
-            <a href="/profile" className="text-center text-gray-700 hover:text-primary transition relative">
-              <div className="text-2xl">
-                <i className="fa-regular fa-user"></i>
-              </div>
-              <div className="text-xs leading-3">{user.username}</div>
-            </a>
-          ) : (
-            <a href="/login" className="text-center text-gray-700 hover:text-primary transition relative">
-              <div className="text-2xl">
-                <i className="fa-regular fa-user"></i>
-              </div>
-              <div className="text-xs leading-3">Tài khoản</div>
-            </a>
-          )}
+            <div className="text-xs leading-3">{user.username}</div>
+          </a>
         </div>
+        ) : (
+        <div className="flex items-center space-x-4">
+          <a href="/login" className="text-center text-gray-700 hover:text-primary transition relative">
+            <div className="text-2xl">
+              <i className="fa-regular fa-heart"></i>
+            </div>
+            <div className="text-xs leading-3">Yêu thích</div>
+          </a>
+          <a href="/login" className="text-center text-gray-700 hover:text-primary transition relative">
+            <div className="text-2xl">
+              <i className="fa-solid fa-bag-shopping"></i>
+            </div>
+            <div className="text-xs leading-3">Giỏ hàng</div>
+          </a>
+          <a href="/login" className="text-center text-gray-700 hover:text-primary transition relative">
+            <div className="text-2xl">
+              <i className="fa-regular fa-user"></i>
+            </div>
+            <div className="text-xs leading-3">Tài khoản</div>
+          </a>
+        </div>
+        )}
       </div>
     </header>
   );
