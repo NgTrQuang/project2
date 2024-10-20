@@ -10,12 +10,12 @@ const register = async (req, res) => {
     // Kiểm tra xem người dùng đã tồn tại chưa
     const existingUser = await User.findOne({ username });
     if (existingUser) {
-      return res.status(400).json({ message: 'User already exists' });
+      return res.status(400).json({ message: 'username đã tồn tại' });
     }
 
     const existingEmail = await User.findOne({ email });
     if (existingEmail) {
-      return res.status(400).json({ message: 'Email already exists' });
+      return res.status(400).json({ message: 'email đã tồn tại' });
     }
     // Mã hóa mật khẩu
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -33,9 +33,9 @@ const register = async (req, res) => {
     // Lưu người dùng vào database
     await newUser.save();
 
-    res.status(201).json({ message: 'User registered successfully' });
+    res.status(201).json({ message: 'Bạn đã đăng ký thành công' });
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error });
+    res.status(500).json({ message: 'Lỗi từ server', error });
   }
 };
 
@@ -47,14 +47,19 @@ const login = async (req, res) => {
     // Tìm người dùng qua username
     const user = await User.findOne({ username });
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'Không tìm thấy người dùng' });
     }
 
+    // Kiểm tra xem tài khoản có bị vô hiệu hóa không
+    if (user.isDisabled) {
+      return res.status(403).json({ message: 'Tài khoản không hoạt động' });
+    }
+    
     // So sánh mật khẩu
     const isMatch = await bcrypt.compare(password, user.password);
     // const isMatch = password === user.password;
     if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid password' });
+      return res.status(400).json({ message: 'Mật khẩu không hợp lệ' });
     }
 
     // Tạo token JWT
@@ -66,7 +71,7 @@ const login = async (req, res) => {
 
     // Trả về token và thông tin người dùng
     res.status(200).json({
-      message: 'Login successful',
+      message: 'Đăng nhập thành công',
       token,
       user: {
         id: user._id,
@@ -76,13 +81,13 @@ const login = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({ message: 'Login failed', error });
+    res.status(500).json({ message: 'Đăng nhập thất bại', error });
   }
 };
 
 const logout = (req, res) => {
     // Thông báo thành công và client sẽ tự xoá token
-    res.status(200).json({ message: 'Logout successful' });
+    res.status(200).json({ message: 'Đăng xuất thành công' });
 };
   
 module.exports = { register, login, logout };

@@ -1,5 +1,6 @@
 const { default: mongoose } = require('mongoose');
 const Product = require('../models/products/products');
+const Category = require('../models/categories/categories');
 
 // Thêm sản phẩm mới
 const addProduct = async (req, res) => {
@@ -16,7 +17,16 @@ const addProduct = async (req, res) => {
 const getProducts = async (req, res) => {
   try {
     const products = await Product.find();
-    res.status(200).json(products);
+    const productsWithCategory = await Promise.all(
+      products.map(async (product) => {
+        const category = await Category.findById(product.category); //{ _id: { $in: product.categories } }
+        return {
+          ...product._doc,  // Spread nội dung của product
+          category,         // Thêm thông tin category đã lấy
+        };
+      })
+    );
+    res.status(200).json(productsWithCategory);
   } catch (error) {
     res.status(500).json({ message: 'Failed to fetch products', error });
   }
@@ -26,7 +36,16 @@ const getProducts = async (req, res) => {
 const getProductsCurrent = async (req, res) => {
     try {
       const products = await Product.find({ isDeleted: false });
-      res.status(200).json(products);
+      const productsWithCategory = await Promise.all(
+        products.map(async (product) => {
+          const category = await Category.findById(product.category); //{ _id: { $in: product.categories } }
+          return {
+            ...product._doc,  // Spread nội dung của product
+            category,         // Thêm thông tin category đã lấy
+          };
+        })
+      );
+      res.status(200).json(productsWithCategory);
     } catch (error) {
       res.status(500).json({ message: 'Failed to fetch products', error });
     }
@@ -39,7 +58,13 @@ const getProductById = async (req, res) => {
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
-    res.status(200).json(product);
+
+    const category = await Category.findById(product.category);
+    const productWithCategory = {
+      ...product._doc, // Spread nội dung của product
+      category,        // Thêm thông tin category
+    };
+    res.status(200).json(productWithCategory);
   } catch (error) {
     res.status(500).json({ message: 'Failed to fetch product', error });
   }
@@ -52,7 +77,13 @@ const getProductByIdCurrent = async (req, res) => {
       if (!product) {
         return res.status(404).json({ message: 'Product not found' });
       }
-      res.status(200).json(product);
+      const category = await Category.findById(product.category);
+      const productWithCategory = {
+        ...product._doc, // Spread nội dung của product
+        category,        // Thêm thông tin category
+      };
+
+      res.status(200).json(productWithCategory);
     } catch (error) {
       res.status(500).json({ message: 'Failed to fetch product', error });
     }
@@ -122,15 +153,18 @@ const updateProduct = async (req, res) => {
 
 const sofeDeleteProduct = async (req, res) => {
     try {
-      const deletedProduct = await Product.findByIdAndUpdate(
-        req.params.id,
-        { isDeleted: true, updatedAt: Date.now() },
-        { new: true }
-      );
+      const deletedProduct = await Product.findById(req.params.id);
       if (!deletedProduct) {
         return res.status(404).json({ message: 'Product not found' });
       }
-      res.status(200).json({ message: 'Product soft deleted successfully' });
+
+      const updatedProduct = await Product.findByIdAndUpdate(
+        req.params.id,
+        { isDeleted: !deletedProduct.isDeleted, updatedAt: Date.now() },
+        { new: true }
+      );
+
+      res.status(200).json({ message: 'Product soft deleted successfully', product: updatedProduct });
     } catch (error) {
       res.status(500).json({ message: 'Failed to soft delete product', error });
     }

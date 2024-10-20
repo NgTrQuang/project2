@@ -7,7 +7,9 @@ const {
     updateUser,
     deleteUser,
     changePassword,
-    getUserById
+    getUserById,
+    toggleUserStatus,
+    upgradeToAdmin
   } = require('../controllers/userController');
 const authMiddleware = require('../middelware/authMiddleware');
 
@@ -32,5 +34,10 @@ router.put('/password', changePassword);
 // Lấy thông tin người dùng theo ID (Chỉ dành cho Admin)
 router.get('/:id', authMiddleware, getUserById); 
 
+// Route để vô hiệu hóa hoặc kích hoạt tài khoản người dùng
+router.patch('/:userId/status', toggleUserStatus);
+
+// Đảm bảo người dùng đã đăng nhập và có quyền Admin
+router.patch('/upgrade/:userId', authMiddleware, upgradeToAdmin);
 
 module.exports = router;

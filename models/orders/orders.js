@@ -7,8 +7,8 @@ const orderSchema = new mongoose.Schema({
   payment: { type: mongoose.Schema.Types.ObjectId, ref: 'Payment' }, // Liên kết tới thanh toán
   orderStatus: {
     type: String,
-    enum: ['Chưa xử lý', 'Đang xử lý', 'Đang giao hàng', 'Đã giao', 'Đã hủy'],
-    default: 'Chưa xử lý',
+    enum: ['Đang xử lý', 'Đã xác nhận', 'Đang giao hàng', 'Đã nhận hàng', 'Đã hủy', 'Lỗi sản phẩm'],
+    default: 'Đang xử lý',
   },
   items: [
     {
@@ -19,6 +19,7 @@ const orderSchema = new mongoose.Schema({
       size: { type: String, default: '' },   // Lưu size người dùng chọn
     },
   ],
+  errorTime: { type: Date, default: null },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 }, { timestamps: true });

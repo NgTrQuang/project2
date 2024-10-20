@@ -14,6 +14,8 @@ const favoriteRoter = require('./routers/favoriteRoter');
 const cartRouter = require('./routers/cartRouter');
 const orderRouter = require('./routers/orderRouter');
 const paymentRouter = require('./routers/paymentRouter');
+const categoryRouter = require('./routers/categoryRouter');
+const statisticsRouter = require('./routers/statisticsRouter');
 
 app.use(cors());
 // Middleware để parse JSON body
@@ -32,6 +34,8 @@ app.use('/api/favorites', favoriteRoter);
 app.use('/api/cart', cartRouter);
 app.use('/api/orders', orderRouter);
 app.use('/api/payment', paymentRouter);
+app.use('/api/categories', categoryRouter);
+app.use('/api/statistics', statisticsRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

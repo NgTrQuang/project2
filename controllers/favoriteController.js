@@ -31,7 +31,9 @@ const getFavoriteByUserId = async (req, res) => {
         if (!favorite) {
             return res.status(404).json({ message: 'Không tìm thấy danh sách yêu thích' });
         }
-        res.status(200).json(favorite.productIds);
+
+        const activeProducts = favorite.productIds.filter(product => product.isDeleted === false);
+        res.status(200).json(activeProducts);
     } catch (error) {
         console.error(error);  // In ra log chi tiết lỗi
         res.status(500).json({ message: 'Lỗi khi lấy danh sách yêu thích', error });

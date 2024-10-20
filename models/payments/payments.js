@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 const paymentSchema = new mongoose.Schema({
   order: { type: mongoose.Schema.Types.ObjectId, ref: 'Order', required: true },
-  method: { type: String, enum: ['COD', 'Credit Card', 'PayPal'], required: true },
-  status: { type: String, enum: ['Chưa thanh toán', 'Đã thanh toán', 'Đang xử lý'], default: 'Chưa thanh toán' },
+  method: { type: String, enum: ['COD', 'PayPal'], required: true },
+  status: { type: String, enum: ['Chưa thanh toán', 'Đã thanh toán'], default: 'Chưa thanh toán' },
   amount: { type: Number, required: true }, // Tổng số tiền thanh toán
   transactionId: { type: String, default: null },
   createdAt: { type: Date, default: Date.now },

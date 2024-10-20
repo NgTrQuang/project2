@@ -16,6 +16,34 @@ const getUserFromToken = async (req, res) => {
     res.status(500).json({ message: 'Lỗi server' });
   }
 };
+
+// Chức năng nâng cấp tài khoản từ Customer lên Admin
+const upgradeToAdmin = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    // Tìm người dùng theo ID
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'Người dùng không tồn tại' });
+    }
+
+    // Kiểm tra xem người dùng đã là admin chưa
+    if (user.role === 'admin') {
+      return res.status(400).json({ message: 'Người dùng này đã là admin' });
+    }
+
+    // Cập nhật vai trò người dùng thành admin
+    user.role = 'admin';
+    await user.save();
+
+    res.status(200).json({ message: 'Đã nâng cấp người dùng thành admin thành công', user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Lỗi trong quá trình nâng cấp', error });
+  }
+};
+
 // API để lấy tất cả người dùng (Chỉ dành cho Admin)
 const getAllUsers = async (req, res) => {
     try {
@@ -145,6 +173,25 @@ const getUserById = async (req, res) => {
   }
 };
 
+const toggleUserStatus = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { isDisabled } = req.body; // Truyền trạng thái isDisabled (true hoặc false)
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    user.isDisabled = isDisabled; // Cập nhật trạng thái vô hiệu hóa
+    await user.save();
+
+    res.status(200).json({ success: true, message: `User status updated to ${isDisabled ? 'disabled' : 'enabled'}` });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Failed to update user status' });
+  }
+};
+
 module.exports = {
   getUserFromToken,
   getAllUsers,
@@ -153,5 +200,7 @@ module.exports = {
   deleteUser,
   changePassword,
   getUserById,
+  toggleUserStatus,
+  upgradeToAdmin,
 };
 

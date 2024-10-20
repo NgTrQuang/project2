@@ -3,6 +3,7 @@ const paypalClient = require('../config/paypalConfig');
 const Order = require('../models/orders/orders');
 const Payment = require('../models/payments/payments');
 const Product = require('../models/products/products');
+const Cart = require('../models/cart/cart');
 const { sendOrderConfirmationEmail } = require('../utils/emailService');
 // const sendOrderConfirmationEmail = require('../utils/emailService'); // Module gửi email
 
@@ -38,22 +39,33 @@ const capturePayment = async (req, res) => {
             // Giảm số lượng sản phẩm trong kho
 
             const order = await Order.findOne({payment: payment._id}).populate('payment');
+            // Giảm số lượng sản phẩm trong kho
             for (const item of order.items) {
                 const product = await Product.findById(item.product);
                 if (product) {
-                    if (product.stock >= item.quantity) {
-                        product.stock -= item.quantity; // Trừ số lượng trong kho
-                        await product.save();
+                    const variant = product.variants.find(v => v.color === item.color && v.size === item.size);
+                    if (variant) {
+                        if (variant.stock >= item.quantity) {
+                            variant.stock -= item.quantity; // Giảm số lượng cho biến thể sản phẩm
+                            await product.save();
+                        } else {
+                            console.error(`Số lượng sản phẩm không đủ: ${product.name}`);
+                            return res.status(400).json({ message: `Không đủ sản phẩm: ${product.name} màu ${item.color}, kích cỡ ${item.size}` });
+                        }
                     } else {
-                        console.error(`Số lượng sản phẩm không đủ: ${product.name}`);
-                        return res.status(400).json({ message: `Không đủ sản phẩm: ${product.name}` });
+                        console.error(`Không tìm thấy biến thể cho sản phẩm: ${product.name} màu ${item.color}, kích cỡ ${item.size}`);
+                        return res.status(404).json({ message: `Biến thể không tồn tại cho sản phẩm: ${product.name}` });
                     }
-                }else {
+                } else {
                     console.error('Không tìm thấy sản phẩm:', item.product);
                     return res.status(404).json({ message: `Sản phẩm không tồn tại: ${item.product}` });
                 }
             }
-
+            // Xóa các sản phẩm khỏi giỏ hàng
+            await Cart.findOneAndUpdate(
+                { user: order.user }, // Tìm giỏ hàng theo người dùng
+                { $pull: { products: { _id: { $in: order.items.map(item => item._id) } } } } // Chỉnh sửa từ items sang products
+            );
             // Gửi email xác nhận đơn hàng
             await sendOrderConfirmationEmail(order); 
 

@@ -11,7 +11,15 @@ const getCart = async (req, res) => {
     if (!cart) {
       return res.status(404).json({ message: 'Giỏ hàng không tồn tại' });
     }
-    res.status(200).json(cart);
+
+    const activeProducts = cart.products.filter(item => item.product.isDeleted === false);
+
+    const updatedCart = {
+      ...cart._doc,  // Lấy tất cả thông tin của giỏ hàng hiện tại
+      products: activeProducts // Thay thế danh sách sản phẩm bằng danh sách đã lọc
+    };
+    
+    res.status(200).json(updatedCart);
   } catch (error) {
     res.status(500).json({ message: 'Lỗi khi lấy giỏ hàng', error });
   }

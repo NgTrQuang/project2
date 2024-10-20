@@ -30,10 +30,7 @@ router.get('/current/:id', getProductByIdCurrent);
 // Route cập nhật sản phẩm theo ID
 router.put('/:id', updateProduct);
 
-// // Route xóa sản phẩm theo ID
-// router.delete('/:id', deleteProduct);
-
 // Route xóa mềm sản phẩm theo ID
-router.delete('/:id', sofeDeleteProduct);
+router.patch('/:id', sofeDeleteProduct);
 
 module.exports = router;

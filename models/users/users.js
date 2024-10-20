@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
   role: { type: String, default: 'customer' },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: null },
+  isDisabled: { type: Boolean, default: false },
 });
 
 const User = mongoose.model('User', userSchema);
