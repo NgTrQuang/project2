@@ -200,13 +200,11 @@ const CartList = () => {
                         {/* Product Image */}
                         <Link to={item?.product?._id ? `/products/details/${item.product._id}` : '#'} className="w-28">
                             <img src={item.product ? item.product.image : ''} alt={item.product ? item.product.name : "Sản phẩm không khả dụng"} className="w-full" />
+                            <h2 className="text-gray-800 text-xl font-medium uppercase">{item.product ? item.product.name : "Sản phẩm không khả dụng"}</h2>
                         </Link>
 
                         {/* Product Details */}
                         <div className={styles.itemOptions}>
-                            <h2 className="text-gray-800 text-xl font-medium uppercase">{item.product ? item.product.name : "Sản phẩm không khả dụng"}</h2>
-                            {/* <p className="text-gray-500 text-sm">Số lượng: {item.quantity}</p> */}
-                            {/* Dropdown chọn màu sắc */}
                             <select 
                                 value={item.color} 
                                 onChange={(e) => handleColorChange(item._id, e.target.value)}
@@ -227,19 +225,17 @@ const CartList = () => {
                                 <option key={index} value={size}>{size}</option>
                                 ))}
                             </select>
-
-                            <QuantitySelector
-                                quantity={item.quantity}
-                                onQuantityChange={(newQuantity) => handleQuantityChange(item._id, newQuantity)}
-                                onRemove={() => removeFromCart(item._id)}
-                                selectedColor={item.color}
-                                selectedSize={item.size}
-                                selectedProduct={item.product} // Dùng item thay vì cartItem
-                            />
                         </div>
-
+                        <QuantitySelector
+                            quantity={item.quantity}
+                            onQuantityChange={(newQuantity) => handleQuantityChange(item._id, newQuantity)}
+                            onRemove={() => removeFromCart(item._id)}
+                            selectedColor={item.color}
+                            selectedSize={item.size}
+                            selectedProduct={item.product} // Dùng item thay vì cartItem
+                        />
                         {/* Product Price */}
-                        <div className="text-primary text-lg font-semibold">{item?.product ? item.product.price : 'N/A'} VND</div>
+                        <div className="text-primary text-lg font-semibold">{item?.product ? item.product.price.toLocaleString() : 'N/A'} VND</div>
 
                         {/* Xóa sản phẩm khỏi giỏ hàng */}
                         <div className="text-gray-600 cursor-pointer hover:text-primary" onClick={() => removeFromCart(item._id)}>
@@ -251,8 +247,8 @@ const CartList = () => {
                 <p>Giỏ hàng trống</p>
             )}
             {/* Hiển thị tổng giá trị thanh toán */}
-            <div className="text-right font-semibold text-lg">
-                Tổng giá trị: {totalPrice} VND
+            <div className="text-right font-medium text-lg">
+                Tổng giá trị: {totalPrice.toLocaleString()} VND
             </div>
             <button 
                 className="bg-primary text-white px-4 py-2 mt-4 rounded ml-auto block"

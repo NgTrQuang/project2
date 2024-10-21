@@ -127,14 +127,14 @@ const ProductList = () => {         //{ onAddToCart }
                 <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
                   <Link
                     to={`/products/details/${product._id}`} // Chuyển đến trang chi tiết sản phẩm
-                    className="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
+                    className="text-black text-lg w-9 h-8 rounded-full bg-white flex items-center justify-center hover:bg-primary transition"
                     title="Xem chi tiết"
                   >
                     <FontAwesomeIcon icon={faEye} /> 
                   </Link>
                   <a
                     onClick={() => addToFavorites(product._id)}
-                    className="text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition"
+                    className="text-black text-lg w-9 h-8 rounded-full bg-white flex items-center justify-center hover:bg-primary transition"
                     title="Thêm vào yêu thích"
                     // Xử lý thêm vào danh sách yêu thích tại đây
                   >
@@ -145,7 +145,7 @@ const ProductList = () => {         //{ onAddToCart }
             </div>
             <div className={styles.productDetails}>
               <strong>{product.name}</strong>
-              <p>Giá: {product.price} VND</p>
+              <p>Giá: {product.price.toLocaleString()} VND</p>
               {/* <p>Mô tả: {product.description || 'Không có mô tả'}</p> */}
               {/* <p>Kích thước: {product.size.join(', ')}</p>
               <p>Màu sắc: {product.color.join(', ')}</p> */}
@@ -157,7 +157,7 @@ const ProductList = () => {         //{ onAddToCart }
               {/* onClick={() => onAddToCart(product)} */}
               <button
                 onClick={() => openModal(product)}
-                className="mt-2 w-full py-2 bg-primary text-white rounded transition duration-300 hover:bg-secondary"
+                className="mt-2 w-full py-2 bg-green-600 text-black rounded transition duration-300 hover:bg-secondary"
               >
                 Thêm vào giỏ hàng
               </button>
@@ -215,11 +215,13 @@ const ProductList = () => {         //{ onAddToCart }
           <p>Không tìm thấy sản phẩm</p>
         )}
       </div>
-      <Pagination
-        totalPages={totalPages}
-        currentPage={currentPage}
-        paginate={(pageNumber) => setCurrentPage(pageNumber)}
-      />
+      {totalPages > 1 && 
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          paginate={(pageNumber) => setCurrentPage(pageNumber)}
+        />
+      }
       <ToastContainer/>
     </div>
   );

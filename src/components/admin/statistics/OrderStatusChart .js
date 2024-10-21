@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { Line } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, Title, Tooltip, Legend);
 
 const OrderStatusChart = () => {
   const [chartData, setChartData] = useState({});
@@ -17,16 +17,18 @@ const OrderStatusChart = () => {
 
         const statuses = data.map(order => order._id); // Trạng thái đơn hàng (pending, shipped, etc.)
         const counts = data.map(order => order.count); // Số lượng đơn hàng trong từng trạng thái
-
         setChartData({
           labels: statuses,
           datasets: [
             {
               label: 'Số lượng đơn hàng',
               data: counts,
-              backgroundColor: 'rgba(54, 162, 235, 0.6)',
               borderColor: 'rgba(54, 162, 235, 1)',
-              borderWidth: 1,
+              backgroundColor: 'rgba(54, 162, 235, 0.2)',
+              borderWidth: 2,
+              tension: 0.4, // Độ cong của đường (0.4 là mức trung bình)
+              pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+              pointBorderColor: 'rgba(54, 162, 235, 1)',
             },
           ],
         });
@@ -44,7 +46,7 @@ const OrderStatusChart = () => {
 
   return (
     <div>
-      <Bar
+      <Line
         data={chartData}
         options={{
           responsive: true,

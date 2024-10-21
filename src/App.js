@@ -4,6 +4,7 @@ import Footer from './layout/Footer/Footer';
 import Header from './layout/Header/Header';
 import Navbar from './layout/Navbar/Navbar';
 import './main.css';
+// import '@fortawesome/fontawesome-free/css/all.min.css';
 import { UserProvider } from './components/context/UserContext';
 import { ProductProvider } from './components/context/ProductContext';
 import Home from './layout/Home/Home';
@@ -21,6 +22,7 @@ import ProductDetails from './components/products/ProductDetails';
 import Checkout from './components/orders/Checkout';
 import PaymentSuccess from './components/payments/PaymentSuccess';
 import PaymentCancel from './components/payments/PaymentCancel';
+
 // import AddressSelector from './components/users/AddressAll';
 
 const App = () => {

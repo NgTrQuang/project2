@@ -40,7 +40,7 @@ const AddToCartButton = ({ userId, productId, quantity, size, color }) => {     
         {/* <QuantitySelector onQuantityChange={handleQuantityChange} /> */}
         <button 
             onClick={handleAddToCart}
-            className="mt-2 w-full py-2 bg-primary text-white rounded transition duration-300 hover:bg-secondary"
+            className="mt-2 w-full py-2 bg-green-600 text-black rounded transition duration-300 hover:bg-secondary"
         >
             Thêm vào giỏ hàng
         </button>

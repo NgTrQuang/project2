@@ -100,11 +100,13 @@ const OrderAllDelivered = () => {
       </div>
       )) : (<p>Hiện đang trống</p>)
       }
-      <Pagination 
-        totalPages={totalPages}
-        currentPage={currentPage}
-        paginate={(pageNumber) => setCurrentPage(pageNumber)} // Cập nhật trang hiện tại
-      />
+      {totalPages && 
+        <Pagination 
+          totalPages={totalPages}
+          currentPage={currentPage}
+          paginate={(pageNumber) => setCurrentPage(pageNumber)} // Cập nhật trang hiện tại
+        />
+      }
       <ToastContainer />
     </div>
   );

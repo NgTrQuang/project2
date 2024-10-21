@@ -199,11 +199,13 @@ const OrderListPage = () => {
           </tbody>
         </table>
       )}
-      <Pagination 
-        totalPages={totalPages}
-        currentPage={currentPage}
-        paginate={(pageNumber) => setCurrentPage(pageNumber)} // Cập nhật trang hiện tại
-      />
+      {totalPages && 
+        <Pagination 
+          totalPages={totalPages}
+          currentPage={currentPage}
+          paginate={(pageNumber) => setCurrentPage(pageNumber)} // Cập nhật trang hiện tại
+        />
+      }
     </div>
   );
 };

@@ -111,32 +111,32 @@ const PersonalInfo = () => {
   return (
     <div className="md:col-span-2">
         <div className="bg-white shadow-md rounded-md p-6">
-        <h4 className="text-lg font-medium text-gray-800 mb-4">Thông tin tài khoản</h4>
+        <h4 className="text-lg font-medium text-gray-900 mb-4">Thông tin tài khoản</h4>
         <form onSubmit={handleSubmit}>
         <div className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                <label htmlFor="first" className="block text-gray-600">Họ</label>
+                <label htmlFor="first" className="block text-gray-600 text-sm mb-1">Họ</label>
                 <input 
                     type="text" 
                     name="first" 
                     id="first" 
                     value={firstName} // First name
                     onChange={(e) => setFirstName(e.target.value)} // Cập nhật state
-                    className="input-box w-full"
+                    className="input-box w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-primary focus:border-primary"
                     placeholder="John"
                 />
                 {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName}</p>}
                 </div>
                 <div>
-                <label htmlFor="last" className="block text-gray-600">Họ lót và tên</label>
+                <label htmlFor="last" className="block text-gray-600 text-sm mb-1">Họ lót và tên</label>
                 <input 
                     type="text" 
                     name="last" 
                     id="last"
                     value={lastName} // Last name .join(' ')
                     onChange={(e) => setLastName(e.target.value)} // Cập nhật state
-                    className="input-box w-full"
+                    className="input-box w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-primary focus:border-primary"
                     placeholder="Doe"
                 />
                 {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
@@ -145,27 +145,27 @@ const PersonalInfo = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                <label htmlFor="email" className="block text-gray-600">Địa chỉ email</label>
+                <label htmlFor="email" className="block text-gray-600 text-sm mb-1">Địa chỉ email</label>
                 <input 
                     type="email" 
                     name="email" 
                     id="email" 
                     value={email}
                     onChange={(e) => setEmail(e.target.value)} // Cập nhật state
-                    className="input-box w-full"
+                    className="input-box w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-primary focus:border-primary"
                     placeholder="john.doe@example.com"
                     readOnly 
                 />
                 </div>
                 <div>
-                <label htmlFor="phone" className="block text-gray-600">Số điện thoại</label>
+                <label htmlFor="phone" className="block text-gray-600 text-sm mb-1">Số điện thoại</label>
                 <input 
                     type="text" 
                     name="phone" 
                     id="phone"
                     value={phoneNumber} 
                     onChange={(e) => setPhoneNumber(e.target.value)} // Cập nhật state
-                    className="input-box w-full"
+                    className="input-box w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-primary focus:border-primary"
                     placeholder="+123 456 789"
                 />
                 {errors.phoneNumber && <p className="text-red-500 text-sm">{errors.phoneNumber}</p>}
@@ -174,25 +174,25 @@ const PersonalInfo = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                <label htmlFor="address" className="block text-gray-600">Địa chỉ</label>
+                <label htmlFor="address" className="block text-gray-600 text-sm mb-1">Địa chỉ</label>
                 <input 
                     type="text" 
                     name="address" 
                     id="address" 
                     value={address}
                     onChange={(e) => setAddress(e.target.value)} // Cập nhật state
-                    className="input-box w-full"
+                    className="input-box w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-primary focus:border-primary"
                     readOnly
                 />
                 </div>
                 <div>
-                <label htmlFor="role" className="block text-gray-600">Loại tài khoản</label>
+                <label htmlFor="role" className="block text-gray-600 text-sm mb-1">Loại tài khoản</label>
                 <input 
                     type="text" 
                     name="role" 
                     id="role" 
                     value={user.role || 'customer'}
-                    className="input-box w-full"
+                    className="input-box w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-primary focus:border-primary"
                     readOnly
                 />
                 </div>
@@ -202,7 +202,7 @@ const PersonalInfo = () => {
         <div className="mt-6">
             <button 
             type="submit"
-            className="w-full sm:w-auto px-4 py-3 text-white bg-primary rounded-md hover:bg-transparent hover:text-primary border border-primary transition"
+            className="w-full sm:w-auto px-3 py-2 text-white bg-primary rounded-md hover:bg-transparent hover:text-primary border border-primary transition"
             >
             Lưu thay đổi
             </button>

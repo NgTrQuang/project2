@@ -101,11 +101,13 @@ const OrderProcessing = () => {
       </div>
       )) : (<p>Hiện đang trống</p>)
       }
-      <Pagination 
-        totalPages={totalPages}
-        currentPage={currentPage}
-        paginate={(pageNumber) => setCurrentPage(pageNumber)} // Cập nhật trang hiện tại
-      />
+      {totalPages > 1 &&
+        <Pagination 
+          totalPages={totalPages}
+          currentPage={currentPage}
+          paginate={(pageNumber) => setCurrentPage(pageNumber)} // Cập nhật trang hiện tại
+        />
+      }
       <ToastContainer />
     </div>
   );

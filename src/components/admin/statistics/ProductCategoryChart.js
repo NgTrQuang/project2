@@ -30,8 +30,8 @@ const ProductCategoryChart = () => {
             {
               label: 'Số lượng của sản phẩm',
               data: productCounts,
-              backgroundColor: 'rgba(153, 102, 255, 0.6)',
-              borderColor: 'rgba(153, 102, 255, 1)',
+              backgroundColor: 'rgb(233, 95, 115, 0.6)',
+              borderColor: 'rgb(233, 95, 115, 1)',
               borderWidth: 1,
             },
           ],
@@ -62,6 +62,13 @@ const ProductCategoryChart = () => {
             title: {
               display: true,
               text: 'Số lượng sản phẩm theo từng thể loại',
+            },
+          },
+          scales: {
+            x: {
+              grid: {
+                display: false, 
+              },
             },
           },
         }}

@@ -87,14 +87,14 @@ const Checkout = () => {
                             <div className="flex flex-col">
                                 <h2 className="font-semibold">{item.product.name}</h2>
                                 <p>Số lượng: {item.quantity}</p>
-                                <p>Giá: {item.product.price} VND</p>
+                                <p>Giá: {item.product.price.toLocaleString()} VND</p>
                             </div>
                         </div>
                     )
                 ))}
             </div>
             <div className="text-right font-semibold text-lg">
-                Tổng giá trị: {totalPrice} VND
+                Tổng giá trị: {totalPrice.toLocaleString()} VND
             </div>
 
             {/* Chọn phương thức thanh toán */}

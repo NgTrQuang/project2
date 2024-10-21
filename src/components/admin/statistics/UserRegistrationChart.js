@@ -63,6 +63,13 @@ const UserRegistrationChart = () => {
               text: 'Người dùng đăng ký trong tháng (Năm hiện tại)',
             },
           },
+          scales: {
+            x: {
+              grid: {
+                display: false, 
+              },
+            },
+          },
         }}
       />
     </div>

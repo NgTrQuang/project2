@@ -45,7 +45,7 @@ const FavoriteList = ({ userId, favoriteItems, handleRemoveFavorite }) => {
           </div>
 
           {/* Product Price */}
-          <div className="text-primary text-lg font-semibold">{item.price} VND</div>
+          <div className="text-primary text-lg font-semibold">{item.price.toLocaleString()} VND</div>
 
           {/* Quantity Selector */}
           {/* <QuantitySelector 
@@ -58,9 +58,9 @@ const FavoriteList = ({ userId, favoriteItems, handleRemoveFavorite }) => {
             title="Xem chi tiết"
           >
             <button 
-                className="mt-2 w-full py-2 bg-primary text-white rounded transition duration-300 hover:bg-secondary"
+                className="mt-2 w-full px-2 py-2 bg-green-600 text-black rounded transition duration-300 hover:bg-secondary"
             >
-                Thêm vào giỏ hàng
+                Mua ngay
             </button>
           </Link>
 

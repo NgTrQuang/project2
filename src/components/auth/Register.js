@@ -73,9 +73,9 @@ const Register = () => {
   };
 
   return (
-    <div className="container py-16">
+    <div className="contain py-16 bg-yellow-50">
       <div className="max-w-lg mx-auto shadow px-6 py-7 rounded overflow-hidden">
-        <h2 className="text-2xl uppercase font-medium mb-1">Đăng ký</h2>
+        <h2 className="text-2xl font-medium mb-1">Đăng ký</h2>
         <form onSubmit={handleSubmit} autoComplete="off">
           <div className="space-y-2">
             <div>
@@ -169,7 +169,7 @@ const Register = () => {
           <div className="mt-4">
             <button
               type="submit"
-              className="block w-full py-2 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium"
+              className="block w-full py-2 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition font-medium"
             >
               Đăng ký
             </button>

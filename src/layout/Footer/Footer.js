@@ -5,13 +5,13 @@ import FooterLinkSection from './FooterLinkSection';
 
 const Footer = () => {
   return (
-    <footer className="bg-white pt-16 pb-12 border-t border-gray-100">
+    <footer className="bg-white pt-12 pb-12 border-t border-gray-100 flex justify-end">
       <div className="container grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Logo and Social Media */}
         <div className="space-y-4">
           <FooterLogo />
           <p className="text-gray-500">
-            Chúng tôi ở đây vì các bạn, cửa hàng mong muốn mang đến trải nghiệm tốt nhất cho khách hàng.
+            Cửa hàng cảm ơn quý khách hàng đã tin tưởng và ủng hộ. Chúng tôi luôn ở đây vì các bạn
           </p>
           <FooterSocialLinks />
         </div>
@@ -36,25 +36,6 @@ const Footer = () => {
             ]}
           />
         </div>
-        {/* <div className="grid grid-cols-2 gap-4 md:gap-8">
-          <FooterLinkSection
-            title="Solutions"
-            links={[
-              { text: 'Marketing', href: '#' },
-              { text: 'Analitycs', href: '#' },
-              { text: 'Commerce', href: '#' },
-              { text: 'Insights', href: '#' },
-            ]}
-          />
-          <FooterLinkSection
-            title="Support"
-            links={[
-              { text: 'Pricing', href: '#' },
-              { text: 'Guides', href: '#' },
-              { text: 'API Status', href: '#' },
-            ]}
-          />
-        </div> */}
       </div>
     </footer>
   );

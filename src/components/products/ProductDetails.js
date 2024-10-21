@@ -82,56 +82,50 @@ const ProductDetails = () => {
     <div className="container mx-auto py-8">
       {/* <h1>Chi tiết sản phẩm</h1> */}
       {product ? (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Hình ảnh sản phẩm */}
-          {/* <div className="product-image w-1/3">
-            <img src={product.image} alt={product.name} className="w-full" />
-          </div> */}
+        <>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="product-image">
             <img 
-              src={selectedImage} 
-              alt={product.name} 
-              className="w-full h-auto rounded-md object-cover" />
-              <div className="flex justify-between mt-4">
-                {/* {product.image.length > 5 && ( */}
-                  <button
-                    onClick={handlePrev}
-                    className="text-dark bg-white-800 p-2 rounded-full"
-                    // disabled={currentIndex === 0}  // Disabled khi ở ảnh đầu tiên
-                  >
-                    &#8592; {/* Mũi tên trái */}
-                  </button>
-                {/* )} */}
-                <div className="grid grid-cols-5 gap-4 mt-4"> 
-                {getVisibleImages(currentIndex, product.image.length).map((image, index) => (
-                  <img 
-                    key={index} 
-                    src={image} 
-                    alt={`product-${index}`} 
-                    className="w-full h-20 object-cover cursor-pointer border border-gray-200 rounded-md" 
-                    onClick={() => setSelectedImage(image)}        
-                  />    
-                ))}  
-                </div>
-                {/* {product.image.length > 5 && ( */}
-                  <button
-                    onClick={handleNext}
-                    className="text-dark bg-white-800 p-2 rounded-full"
-                    // disabled={currentIndex === product.image.length - 1}  // Disabled khi ở ảnh cuối
-                  >
-                    &#8594; {/* Mũi tên phải */}
-                  </button>
-                {/* )} */}
+            src={selectedImage} 
+            alt={product.name} 
+            className="w-full h-auto rounded-md object-cover" />
+            <div className="flex justify-between mt-4">
+              <button
+                onClick={handlePrev}
+                className="text-dark bg-white-800 p-2 rounded-full"
+              >
+                &#8592; 
+              </button>
+              <div className="grid grid-cols-5 gap-4 mt-4"> 
+              {getVisibleImages(currentIndex, product.image.length).map((image, index) => (
+                <img 
+                  key={index} 
+                  src={image} 
+                  alt={`product-${index}`} 
+                  className="w-full h-20 object-cover cursor-pointer border border-gray-200 rounded-md" 
+                  onClick={() => setSelectedImage(image)}        
+                />    
+              ))}  
               </div>
-   
+              <button
+                onClick={handleNext}
+                className="text-dark bg-white-800 p-2 rounded-full"
+              >
+                &#8594;
+              </button>
+            </div>   
           </div>
-
-          {/* Thông tin sản phẩm */}
+          <div className="">
+            <h3 className="text-xl font-medium mb-4 mt-4">Mô tả sản phẩm</h3>
+            <div
+              className="text-gray-600"
+              dangerouslySetInnerHTML={{ __html: product.description }}
+            />
+          </div>         
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="product-info">
-            {/* <h1 className="text-3xl font-bold">{product.name}</h1>
-            <p className="text-xl text-primary font-semibold">{product.price} VND</p>
-            <p className="text-gray-700 my-4">{product.description}</p> */}
-            <h2 className="text-3xl font-medium uppercase mb-2">{product.name}</h2>
+            <h2 className="text-3xl font-medium mb-4 mt-8">{product.name}</h2>
             <div className="flex items-center mb-4">
               <div className="flex gap-1 text-sm text-yellow-400">
                 {Array(5).fill().map((_, index) => (
@@ -142,27 +136,14 @@ const ProductDetails = () => {
             </div>
             
             <div className="space-y-2">
-              {/* <p className="text-gray-800 font-semibold space-x-2">
-                <span>Tình trạng: </span>
-                <span className="text-green-600">{product.stock > 0 ? product.stock : 'Hết hàng'}</span>
-              </p> */}
-              {/* <p className="space-x-2">
-                <span className="text-gray-800 font-semibold">Brand: </span>
-                <span className="text-gray-600">{product.brand}</span>
-              </p> */}
               <p className="space-x-2">
                 <span className="text-gray-800 font-semibold">Thể loại</span>
                 <span className="text-gray-600">{product.category.name}</span>
               </p>
-              {/* <p className="space-x-2">
-                <span className="text-gray-800 font-semibold">SKU: </span>
-                <span className="text-gray-600">{product.sku}</span>
-              </p> */}
             </div>
             <div className="flex items-baseline mb-1 space-x-2 font-roboto mt-4">
               <span className="text-gray-800 font-semibold">Giá: </span>
               <p className="text-xl text-primary font-semibold">{product.price} VND</p>
-              {/* {product.oldPrice && <p className="text-base text-gray-400 line-through">{product.oldPrice} VND</p>} */}
             </div>
             <ColorList 
               colors={product ? [...new Set(product?.variants.map(variant => variant.color))] : []} 
@@ -190,19 +171,25 @@ const ProductDetails = () => {
               userId={userId}
               size={selectedSize}
               color={selectedColor}
-            />
-            <h3 className="text-xl font-medium mb-4 mt-4">Mô tả sản phẩm</h3>
-            <div
-              className="text-gray-600"
-              dangerouslySetInnerHTML={{ __html: product.description }}
-            />
+            />  
+          </div>
+          <div className="flex justify-center">
+          <div className="md:w-2/3 w-full items-center text-center">
+            <h3 className="text-xl font-medium mb-4 ">Sản phẩm gợi ý</h3>
+            <RecommentProduct/>
+          </div>
           </div>
         </div>
+        </>
       ) : (
         <div>Không tìm thấy sản phẩm</div>
       )}
-      <h3 className="text-2xl font-medium mb-4 mt-40">Sản phẩm gợi ý</h3>
-      <RecommentProduct/>
+      {/* <h3 className="text-2xl font-medium mb-4 mt-40">Sản phẩm gợi ý</h3>
+      <RecommentProduct/> */}
+        {/* <div className="md:w-1/3">
+          <h3 className="text-2xl font-medium mb-4">Sản phẩm gợi ý</h3>
+          <RecommentProduct/>
+        </div> */}
       <ToastContainer/>
     </div>
   );

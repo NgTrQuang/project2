@@ -34,8 +34,8 @@ const Profile = () => {
         
         {/* Sidebar */}
         <div className="md:col-span-1">
-          <div className="bg-white shadow-md rounded-md p-4">
-            <div className="flex items-center gap-4 mb-6">
+          <div className="bg-yellow-50 shadow-md rounded-md p-4">
+            <div className="flex items-center gap-4 mb-8">
               <div className="flex-shrink-0">
                 <img 
                   src="../assets/images/avatar_user.jpg" 
@@ -44,31 +44,31 @@ const Profile = () => {
                 />
               </div>
               <div>
-                <p className="text-gray-600">Chào,</p>
-                <h4 className="text-gray-800 font-medium">{user?.fullName || 'Guest'}</h4>
+                <p className="text-gray-500">Chào,</p>
+                <h4 className="text-xl font-semibold text-gray-800">{user?.fullName || 'Guest'}</h4>
               </div>
             </div>
 
             <div className="space-y-4">
-              <div className="space-y-1">
+              <div className="space-y-2">
                 <a href="#" className="block font-medium text-gray-700 hover:text-primary transition">
                   Quản lý tài khoản
                 </a>
                 <a 
                   href="#" 
-                  className={`block ${activeTab === 'personalInfo' ? 'text-primary' : 'text-gray-600'} transition`}
+                  className={`block ${activeTab === 'personalInfo' ? 'text-primary' : 'text-gray-600'} transition ml-6`}
                   onClick={() => setActiveTab('personalInfo')}
                 >
                   Thông tin tài khoản
                 </a>
                 <a 
                   href="#" 
-                  className={`block ${activeTab === 'address' ? 'text-primary' : 'text-gray-600'} transition`}
+                  className={`block ${activeTab === 'address' ? 'text-primary' : 'text-gray-600'} transition ml-6`}
                   onClick={() => setActiveTab('address')}
                 >
                   Quản lý địa chỉ
                 </a>
-                <a href="#" className="block text-gray-600 hover:text-primary transition">
+                <a href="#" className="block text-gray-600 hover:text-primary transition ml-6">
                   Đổi mật khẩu
                 </a>
               </div>
@@ -79,35 +79,35 @@ const Profile = () => {
                 </a>
                 <a 
                   href="#" 
-                  className={`block ${activeTab === 'pending' ? 'text-primary' : 'text-gray-600'} transition`}
+                  className={`block ${activeTab === 'pending' ? 'text-primary' : 'text-gray-600'} transition ml-6`}
                   onClick={() => setActiveTab('pending')}
                 >
                   Chờ xử lý
                 </a>
                 <a 
                   href="#" 
-                  className={`block ${activeTab === 'processing' ? 'text-primary' : 'text-gray-600'} transition`}
+                  className={`block ${activeTab === 'processing' ? 'text-primary' : 'text-gray-600'} transition ml-6`}
                   onClick={() => setActiveTab('processing')}
                 >
                   Đã xác nhận
                 </a>
                 <a 
                   href="#" 
-                  className={`block ${activeTab === 'shipping' ? 'text-primary' : 'text-gray-600'} transition`}
+                  className={`block ${activeTab === 'shipping' ? 'text-primary' : 'text-gray-600'} transition ml-6`}
                   onClick={() => setActiveTab('shipping')}
                 >
                   Đang vận chuyển
                 </a>
                 <a 
                   href="#" 
-                  className={`block ${activeTab === 'delivered' ? 'text-primary' : 'text-gray-600'} transition`}
+                  className={`block ${activeTab === 'delivered' ? 'text-primary' : 'text-gray-600'} transition ml-6`}
                   onClick={() => setActiveTab('delivered')}
                 >
                   Đã giao
                 </a>
                 <a 
                   href="#" 
-                  className={`block ${activeTab === 'canceled' ? 'text-primary' : 'text-gray-600'} transition`}
+                  className={`block ${activeTab === 'canceled' ? 'text-primary' : 'text-gray-600'} transition ml-6`}
                   onClick={() => setActiveTab('canceled')}
                 >
                   Đã hủy
@@ -125,7 +125,7 @@ const Profile = () => {
                   </a>
                   <a 
                     href="#" 
-                    className={`block ${activeTab === 'manageUser' ? 'text-primary' : 'text-gray-600'} transition`}
+                    className={`block ${activeTab === 'manageUser' ? 'text-primary' : 'text-gray-600'} transition ml-6`}
                     onClick={() => setActiveTab('manageUser')}
                   >
                     Danh sách người dùng
@@ -137,7 +137,7 @@ const Profile = () => {
                   </a>
                   <a 
                     href="#" 
-                    className={`block ${activeTab === 'manageProduct' ? 'text-primary' : 'text-gray-600'} transition`}
+                    className={`block ${activeTab === 'manageProduct' ? 'text-primary' : 'text-gray-600'} transition ml-6`}
                     onClick={() => setActiveTab('manageProduct')}
                   >
                     Danh sách sản phẩm
@@ -149,42 +149,42 @@ const Profile = () => {
                   </a>
                   <a 
                     href="#" 
-                    className={`block ${activeTab === 'manageOrder' ? 'text-primary' : 'text-gray-600'} transition`}
+                    className={`block ${activeTab === 'manageOrder' ? 'text-primary' : 'text-gray-600'} transition ml-6`}
                     onClick={() => setActiveTab('manageOrder')}
                   >
                     Tất cả các đơn hàng
                   </a>
                   <a 
                     href="#" 
-                    className={`block ${activeTab === 'manageOrderPending' ? 'text-primary' : 'text-gray-600'} transition`}
+                    className={`block ${activeTab === 'manageOrderPending' ? 'text-primary' : 'text-gray-600'} transition ml-6`}
                     onClick={() => setActiveTab('manageOrderPending')}
                   >
                     Đơn hàng chờ xử lý
                   </a>
                   <a 
                     href="#" 
-                    className={`block ${activeTab === 'manageOrderProcessing' ? 'text-primary' : 'text-gray-600'} transition`}
+                    className={`block ${activeTab === 'manageOrderProcessing' ? 'text-primary' : 'text-gray-600'} transition ml-6`}
                     onClick={() => setActiveTab('manageOrderProcessing')}
                   >
                     Đơn hàng đã xác nhận
                   </a>
                   <a 
                     href="#" 
-                    className={`block ${activeTab === 'manageOrderShipping' ? 'text-primary' : 'text-gray-600'} transition`}
+                    className={`block ${activeTab === 'manageOrderShipping' ? 'text-primary' : 'text-gray-600'} transition ml-6`}
                     onClick={() => setActiveTab('manageOrderShipping')}
                   >
                     Đơn hàng đang vận chuyển
                   </a>
                   <a 
                     href="#" 
-                    className={`block ${activeTab === 'manageOrderDelivered' ? 'text-primary' : 'text-gray-600'} transition`}
+                    className={`block ${activeTab === 'manageOrderDelivered' ? 'text-primary' : 'text-gray-600'} transition ml-6`}
                     onClick={() => setActiveTab('manageOrderDelivered')}
                   >
                     Đơn hàng đã giao
                   </a>
                   <a 
                     href="#" 
-                    className={`block ${activeTab === 'manageOrderCanceled' ? 'text-primary' : 'text-gray-600'} transition`}
+                    className={`block ${activeTab === 'manageOrderCanceled' ? 'text-primary' : 'text-gray-600'} transition ml-6`}
                     onClick={() => setActiveTab('manageOrderCanceled')}
                   >
                     Đơn hàng đã hủy
@@ -196,7 +196,7 @@ const Profile = () => {
                   </a>
                   <a 
                     href="#" 
-                    className={`block ${activeTab === 'statistics' ? 'text-primary' : 'text-gray-600'} transition`}
+                    className={`block ${activeTab === 'statistics' ? 'text-primary' : 'text-gray-600'} transition ml-6`}
                     onClick={() => setActiveTab('statistics')}
                   >
                     Thống kê
