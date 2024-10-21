@@ -1,9 +1,9 @@
 const paypal = require('@paypal/checkout-server-sdk');
 const paypalClient = require('../config/paypalConfig');
-const Order = require('../models/orders/orders');
-const Payment = require('../models/payments/payments');
-const Product = require('../models/products/products');
-const Cart = require('../models/cart/cart');
+const Order = require('../models/orders');
+const Payment = require('../models/payments');
+const Product = require('../models/products');
+const Cart = require('../models/Carts');
 const { sendOrderConfirmationEmail } = require('../utils/emailService');
 // const sendOrderConfirmationEmail = require('../utils/emailService'); // Module gửi email
 

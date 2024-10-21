@@ -1,4 +1,4 @@
-const Favorite = require('../models/favorite/favorite');
+const Favorite = require('../models/Favorites');
 
 // Thêm sản phẩm vào mục yêu thích
 const addFavorite = async (req, res) => {

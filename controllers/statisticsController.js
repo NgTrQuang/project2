@@ -1,6 +1,6 @@
-const User = require('../models/users/users');
-const Product = require('../models/products/products');
-const Order = require('../models/orders/orders');
+const User = require('../models/users');
+const Product = require('../models/products');
+const Order = require('../models/orders');
 
 // Controller để lấy thống kê người dùng
 const getUserStatistics = async (req, res) => {

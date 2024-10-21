@@ -1,5 +1,5 @@
-const Cart = require('../models/cart/cart');
-const Product = require('../models/products/products');
+const Cart = require('../models/Carts');
+const Product = require('../models/products');
 
 
 // Lấy giỏ hàng của người dùng

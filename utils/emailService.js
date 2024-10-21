@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
-const User = require('../models/users/users');
-const Product = require('../models/products/products');
+const User = require('../models/users');
+const Product = require('../models/products');
 
 // Hàm gửi email xác nhận đơn hàng
 const sendOrderConfirmationEmail = async (order) => {

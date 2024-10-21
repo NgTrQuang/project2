@@ -1,4 +1,4 @@
-const User = require('../models/users/users');
+const User = require('../models/users');
 
 // API để lấy thông tin người dùng từ token
 const getUserFromToken = async (req, res) => {

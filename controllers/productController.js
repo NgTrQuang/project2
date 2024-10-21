@@ -1,6 +1,6 @@
 const { default: mongoose } = require('mongoose');
-const Product = require('../models/products/products');
-const Category = require('../models/categories/categories');
+const Product = require('../models/products');
+const Category = require('../models/Categories');
 
 // Thêm sản phẩm mới
 const addProduct = async (req, res) => {

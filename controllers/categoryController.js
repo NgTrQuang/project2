@@ -1,5 +1,5 @@
 // Import model Category
-const Category = require('../models/categories/categories');
+const Category = require('../models/Categories');
 
 // Lấy tất cả danh mục
 const getCategories = async (req, res) => {
