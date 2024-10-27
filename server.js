@@ -22,7 +22,7 @@ app.use(cors());
 app.use(express.json());
 
 // Kết nối tới MongoDB
-mongoose.connect('mongodb+srv://Thinhne1504:Thinhne1504@cluster0.8r9hv.mongodb.net/sports_shop?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://Thinhne1504:Thinhne1504@cluster0.8r9hv.mongodb.net/spring_shop?retryWrites=true&w=majority')
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('Failed to connect to MongoDB', err));
 
