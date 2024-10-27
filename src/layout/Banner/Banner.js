@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 
 const Banner = () => {
   const images = [
-    "assets/images/banner2.jpg",
-    "assets/images/banner3.jpg",
-    "assets/images/banner4.jpg",
-    "assets/images/banner5.jpg",
-    "assets/images/banner6.jpg"
+    "assets/images/banner_the_thao1.jpg",
+    "assets/images/banner_the_thao2.jpg",
+    "assets/images/banner_the_thao3.jpg",
+    "assets/images/banner_the_thao4.jpg",
+    "assets/images/banner_the_thao5.jpg"
   ];
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -32,7 +32,7 @@ const Banner = () => {
         </h1>
         <p>
           Chào mừng đến với chúng tôi để có trải nghiệm tuyệt vời và thú vị <br />
-          Nơi dành cho đam mê thời trang và có cùng sở thích với bạn.
+          Nơi dành cho đam mê thể thao và có cùng sở thích với bạn.
         </p>
         <div className="mt-12">
           <a

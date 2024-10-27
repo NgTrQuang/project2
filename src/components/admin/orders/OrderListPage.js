@@ -64,10 +64,10 @@ const OrderListPage = () => {
       });
       // Cập nhật trạng thái đơn hàng sau khi hủy đơn
       const updatedOrders = orders.map((order) =>
-        order._id === orderId ? { 
+        order?._id === orderId ? { 
             ...order, 
-            orderStatus: response.data.orderStatus, 
-            payment: { ...order.payment, status: response.data.payment.status }, 
+            orderStatus: response.data?.orderStatus, 
+            payment: { ...order?.payment, status: response.data?.payment?.status }, 
         } : order
       );
       setOrders(updatedOrders);
@@ -78,12 +78,12 @@ const OrderListPage = () => {
 
   // Hiển thị nút hành động tùy theo trạng thái đơn hàng
   const renderActionButtons = (order) => {
-    switch (order.orderStatus) {
+    switch (order?.orderStatus) {
       case 'Đang xử lý':
         return (
             <>
             <button
-              onClick={() => handleStatusChange(order._id)}
+              onClick={() => handleStatusChange(order?._id)}
               className="bg-green-500 text-white px-3 py-1 rounded ml-2"
             >
               Xác nhận
@@ -103,7 +103,7 @@ const OrderListPage = () => {
         return (
             <>
             <button
-                onClick={() => handleStatusChange(order._id)}
+                onClick={() => handleStatusChange(order?._id)}
                 className="bg-blue-500 text-white px-3 py-1 rounded ml-2"
             >
                 Giao hàng
@@ -121,20 +121,20 @@ const OrderListPage = () => {
       case 'Đang giao hàng':
         return (
           <button
-            onClick={() => handleStatusChange(order._id)}
+            onClick={() => handleStatusChange(order?._id)}
             className="bg-yellow-500 text-white px-3 py-1 rounded ml-2"
           >
             Đã giao hàng
           </button>
         );
       case 'Đã nhận hàng':
-        const isErrorExpired = order.errorTime && new Date() - new Date(order.errorTime) > 24 * 60 * 60 * 1000;
+        const isErrorExpired = order?.errorTime && new Date() - new Date(order?.errorTime) > 24 * 60 * 60 * 1000;
         console.log(isErrorExpired);
         return (
             <>   
             { !isErrorExpired ?
             <button
-                onClick={() => handleCancelOrder(order._id)}
+                onClick={() => handleCancelOrder(order?._id)}
                 className="bg-purple-500 text-white px-3 py-1 rounded ml-2"
             >
                 Lỗi sản phẩm
@@ -145,7 +145,7 @@ const OrderListPage = () => {
         return (
             <>   
             <button
-                onClick={() => handleCancelOrder(order._id)}
+                onClick={() => handleCancelOrder(order?._id)}
                 className="bg-purple-500 text-white px-3 py-1 rounded ml-2"
             >
                 Xác nhận
@@ -185,12 +185,12 @@ const OrderListPage = () => {
           </thead>
           <tbody>
             {currentOrders.map((order) => (
-              <tr key={order._id} className="text-center">
-                <td className="py-2 px-4 border">{order._id}</td>
-                <td className="py-2 px-4 border">{order.totalAmount.toLocaleString()} đ</td>
-                <td className="py-2 px-4 border">{order.orderStatus}</td>
-                <td className="py-2 px-4 border">{order.payment?.status || 'Chưa thanh toán'}</td>
-                <td className="py-2 px-4 border">{order.shippingAddress}</td>
+              <tr key={order?._id} className="text-center">
+                <td className="py-2 px-4 border">{order?._id}</td>
+                <td className="py-2 px-4 border">{order?.totalAmount.toLocaleString()} đ</td>
+                <td className="py-2 px-4 border">{order?.orderStatus}</td>
+                <td className="py-2 px-4 border">{order?.payment?.status || 'Chưa thanh toán'}</td>
+                <td className="py-2 px-4 border">{order?.shippingAddress}</td>
                 <td className="py-2 px-4 border">
                   {renderActionButtons(order)}
                 </td>

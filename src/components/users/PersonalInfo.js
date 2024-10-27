@@ -9,7 +9,7 @@ const PersonalInfo = () => {
   const { user, setUser } = useUserContext();
 
   // State để quản lý các giá trị của form
-  // const [fullName, setFullName] = useState(user.fullName);
+  // const [fullName, setFullName] = useState(user?.fullName);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState(''); 
   const [email, setEmail] = useState('');
@@ -20,11 +20,11 @@ const PersonalInfo = () => {
 
   useEffect(() => {
     if (user) {
-      setFirstName(user.fullName?.split(' ')[0] || '');
-      setLastName(user.fullName?.split(' ').slice(1).join(' ') || '');
-      setEmail(user.email || '');
-      setPhoneNumber(user.phoneNumber || '');
-      setAddress(user.address || '');
+      setFirstName(user?.fullName?.split(' ')[0] || '');
+      setLastName(user?.fullName?.split(' ').slice(1).join(' ') || '');
+      setEmail(user?.email || '');
+      setPhoneNumber(user?.phoneNumber || '');
+      setAddress(user?.address || '');
     }
   }, [user]);
   
@@ -55,7 +55,7 @@ const PersonalInfo = () => {
   };
 
   // Xử lý phân tách họ và tên
-  // const [firstName, ...lastName] = user.fullName ? user.fullName.split(' ') : ['Guest'];
+  // const [firstName, ...lastName] = user?.fullName ? user?.fullName.split(' ') : ['Guest'];
   // Hàm xử lý submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -191,7 +191,7 @@ const PersonalInfo = () => {
                     type="text" 
                     name="role" 
                     id="role" 
-                    value={user.role || 'customer'}
+                    value={user?.role || 'customer'}
                     className="input-box w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-primary focus:border-primary"
                     readOnly
                 />

@@ -28,7 +28,7 @@ const FavoritePage = () => {
     const handleRemoveFavorite = async (productId) => {
         try {
         await axios.delete('http://localhost:3000/api/favorites/remove', { data: { userId, productId } });
-        setFavoriteProducts(favoriteProducts.filter(product => product._id !== productId));
+        setFavoriteProducts(favoriteProducts.filter(product => product?._id !== productId));
         toast.success("Sản phẩm đã được xóa khỏi danh sách yêu thích", {
             position: "top-right",
             autoClose: 3000, // tự đóng sau 3 giây

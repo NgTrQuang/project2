@@ -6,41 +6,41 @@ import { useProductContext } from '../../components/context/ProductContext';
 const Categories = () => {
   const categories = [
     { 
-      src: 'assets/images/category/T-shirt.jpg', 
-      alt: 'T-Shirt', 
-      label: 'T-Shirt', 
-      description: 'Áo thun là một lựa chọn lý tưởng cho mọi dịp, từ dạo phố cho đến các hoạt động thể thao. Chúng mang lại sự thoải mái và phong cách trẻ trung cho người mặc.' 
+      src: 'assets/images/category/ao_thun.jpg', 
+      alt: 'Áo thun', 
+      label: 'Áo thun', 
+      description: 'Áo thun đa dụng và dễ phối, phù hợp cho cả dạo phố và hoạt động thể thao nhẹ. Với chất liệu thoáng mát, đây là lựa chọn không thể thiếu cho phong cách năng động.' 
     },
     { 
-      src: 'assets/images/category/jean.jpg', 
-      alt: 'Jean', 
-      label: 'Jean', 
-      description: 'Quần jean không bao giờ lỗi mốt và luôn là sự lựa chọn hàng đầu cho mọi phong cách. Chúng phù hợp với nhiều loại áo và giày, tạo nên nhiều phong cách khác nhau từ casual đến lịch sự.' 
+      src: 'assets/images/category/polo.jpg', 
+      alt: 'Polo', 
+      label: 'Polo', 
+      description: 'Áo polo vừa lịch sự vừa năng động, là lựa chọn lý tưởng cho các hoạt động thể thao hoặc gặp gỡ. Thiết kế cổ gập mang lại vẻ chỉnh chu nhưng vẫn thoải mái khi di chuyển.' 
     },
     { 
-      src: 'assets/images/category/hoodies.jpg', 
-      alt: 'Hoodies', 
-      label: 'Hoodies', 
-      description: 'Hoodies là trang phục hoàn hảo cho những ngày lạnh. Chúng mang lại cảm giác ấm áp và dễ dàng phối hợp với nhiều trang phục khác nhau, từ quần jogger đến quần jeans.' 
+      src: 'assets/images/category/ao_khoac.jpg', 
+      alt: 'Áo khoác thể thao', 
+      label: 'Áo khoác thể thao', 
+      description: 'Áo khoác thể thao giữ ấm và linh hoạt cho mọi hoàn cảnh, từ luyện tập ngoài trời đến những buổi dạo phố. Với chất liệu mềm mại và kiểu dáng khỏe khoắn, áo khoác thể thao luôn là sự lựa chọn đa năng.' 
     },
     { 
-      src: 'assets/images/category/so-mi.jpg', 
-      alt: 'Sơ mi', 
-      label: 'Sơ mi', 
-      description: 'Sơ mi là một món đồ thời trang không thể thiếu trong tủ đồ của mọi người. Chúng phù hợp cho môi trường công sở và cũng có thể được mặc trong các buổi tiệc, giúp bạn luôn nổi bật.' 
+      src: 'assets/images/category/quan_dai.jpg', 
+      alt: 'Quần dài', 
+      label: 'Quần dài', 
+      description: 'Quần dài giúp bạn cân bằng giữa phong cách trẻ trung và năng động. Thiết kế tinh tế theo thiên hướng thể thao và dễ phối hợp với áo thun hay áo polo, quần dài sẽ là lựa chọn đem lại sự linh hoạt cho nhiều hoạt động.' 
     },
     { 
       src: 'assets/images/category/the-thao.jpg', 
-      alt: 'Thể thao', 
-      label: 'Thể thao', 
-      description: 'Trang phục thể thao được thiết kế để mang lại sự thoải mái và linh hoạt trong các hoạt động thể chất. Chúng giúp bạn vận động dễ dàng hơn và giữ cho bạn luôn thoải mái trong suốt quá trình tập luyện.' 
+      alt: 'Combo bộ quần áo thể thao', 
+      label: 'Combo bộ quần áo thể thao', 
+      description: 'Combo bộ quần áo thể thao giúp bạn thoải mái tối đa khi vận động. Với chất liệu co giãn và thấm hút mồ hôi, combo quần áo thể thao mang đến sự linh hoạt và phong cách năng động đáng để bạn trải nghiệm.' 
     },
     { 
-      src: 'assets/images/category/short.png', 
+      src: 'assets/images/category/quan_short.jpg', 
       alt: 'Short', 
       label: 'Short', 
-      description: 'Short là lựa chọn tuyệt vời cho mùa hè. Chúng giúp bạn cảm thấy mát mẻ và thoải mái trong những ngày nắng nóng. Có nhiều kiểu dáng và màu sắc để bạn lựa chọn.' 
-    },
+      description: 'Quần Short mang lại sự mát mẻ và dễ chịu cho ngày hè, phù hợp cho cả hoạt động thể thao và vui chơi ngoài trời. Kiểu dáng gọn nhẹ và linh hoạt cho mọi hoạt động.' 
+    },    
   ];
 
   const { setProducts } = useProductContext();
@@ -71,18 +71,18 @@ const Categories = () => {
       <div className="grid grid-cols-1 gap-6">
         {categories.map((category, index) => (
           <div key={index} className={`flex flex-col md:flex-row bg-gray-50 rounded-md overflow-hidden group p-4 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-            <div className="md:w-1/2">
-              <img src={category.src} alt={category.alt} className="w-full h-100 object-cover" />
+            <div className="md:w-1/2 flex justify-center items-center">
+              <img src={category.src} alt={category.alt} className="w-64 h-64 object-cover" />
             </div>
             <div className="md:w-1/2 p-4 flex flex-col justify-center">
               <h3 className="text-lg font-semibold text-gray-800">{category.label}</h3>
               <p className="text-gray-600 mb-2">{category.description}</p>
-              <a
+              <button
                 onClick={() => handleCategoryClick(categoriesMapping[index])}
                 className="inline-block mt-2 text-primary font-medium hover:underline"
               >
                 Xem sản phẩm
-              </a>
+              </button>
             </div>
           </div>
         ))}

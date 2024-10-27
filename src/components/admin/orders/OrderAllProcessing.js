@@ -67,7 +67,7 @@ const OrderAllProcessing = () => {
   }
 
   // Tách đơn hàng theo trạng thái
-  const processingOrders = orders.filter(order => order.orderStatus === 'Đã xác nhận');
+  const processingOrders = orders.filter(order => order?.orderStatus === 'Đã xác nhận');
 
   // Tính toán trang
   const indexOfLastOrder = currentPage * ordersPerPage;
@@ -79,8 +79,8 @@ const OrderAllProcessing = () => {
     <div> 
       <h3 className="text-lg font-bold">Đơn hàng đang xử lý</h3>
       {currentOrders.length > 0 ? currentOrders.map(order => (
-        <div key={order._id} className="border p-4 my-2">
-        <p>Mã đơn hàng: {order._id}</p>
+        <div key={order?._id} className="border p-4 my-2">
+        <p>Mã đơn hàng: {order?._id}</p>
         <div className="ml-4">
           {order?.items.map((item) => (
             <div key={item?.product?._id} className="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
@@ -88,15 +88,15 @@ const OrderAllProcessing = () => {
                 <img src={item?.product ? item?.product?.image : ''} alt={item?.product ? item?.product?.name : "Sản phẩm không khả dụng"} className="w-full" />
               </Link>
               <p>{item?.product?.name}</p> {/* Giả sử bạn có tên sản phẩm ở đây */}
-              <p>{item.quantity}</p>
-              <p>{item.price.toLocaleString()} VND</p>
-              <p>{item.color}</p>
-              <p>{item.size}</p>
+              <p>{item?.quantity}</p>
+              <p>{item?.price.toLocaleString()} VND</p>
+              <p>{item?.color}</p>
+              <p>{item?.size}</p>
             </div>
           ))}
         </div>
-        <p>Ngày đặt: {new Date(order.createdAt).toLocaleDateString()}</p>
-        <p>Tổng giá trị: {order.totalAmount.toLocaleString()} VND</p>
+        <p>Ngày đặt: {new Date(order?.createdAt).toLocaleDateString()}</p>
+        <p>Tổng giá trị: {order?.totalAmount.toLocaleString()} VND</p>
         <p>Trạng thái thanh toán: {order?.payment?.status}</p> 
       </div>
       )) : (<p>Hiện đang trống</p>)
@@ -108,7 +108,7 @@ const OrderAllProcessing = () => {
           paginate={(pageNumber) => setCurrentPage(pageNumber)} // Cập nhật trang hiện tại
         />
       }
-      <ToastContainer />
+      <ToastContainer limit={3}/>
     </div>
   );
 };

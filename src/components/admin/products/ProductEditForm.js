@@ -10,19 +10,21 @@ const ProductEditForm = ({ selectedProduct, setSelectedProduct }) => {
     console.log('selectedProduct: ', selectedProduct)
 //   const { productId } = useParams(); // Lấy ID sản phẩm từ URL
 //   const history = useHistory(); // Dùng useHistory để điều hướng sau khi lưu sản phẩm
-  const [name, setName] = useState(selectedProduct.name);
-  const [description, setDescription] = useState(selectedProduct.description);
-  const [price, setPrice] = useState(selectedProduct.price);
-  const [category, setCategory] = useState(selectedProduct?.category._id);
+  const [name, setName] = useState(selectedProduct?.name);
+  const [description, setDescription] = useState(selectedProduct?.description);
+  const [price, setPrice] = useState(selectedProduct?.price);
+  const [category, setCategory] = useState(selectedProduct?.category?._id);
   const [categories, setCategories] = useState([]);
-  const [variants, setVariants] = useState(selectedProduct.variants);
+  const [variants, setVariants] = useState(selectedProduct?.variants);
 
-  const [oldImages, setOldImages] = useState(selectedProduct.image);
+  const [oldImages, setOldImages] = useState(selectedProduct?.image);
   const [newImages, setNewImages] = useState([]);
 
   const [selectedImages, setSelectedImages] = useState([]);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
+  const [isProcessing, setIsProcessing] = useState(false);
 
   // Lấy danh sách các danh mục từ server
   useEffect(() => {
@@ -115,7 +117,7 @@ const ProductEditForm = ({ selectedProduct, setSelectedProduct }) => {
     e.preventDefault();
     setError('');
     setSuccess('');
-
+    setIsProcessing(true);
     // Tải lên hình ảnh và lấy URL
     const imageUrls = await uploadImages();
     const combinedImages = [...oldImages, ...imageUrls];
@@ -130,7 +132,7 @@ const ProductEditForm = ({ selectedProduct, setSelectedProduct }) => {
     };
 
     try {
-      const response = await axios.put(`http://localhost:3000/api/products/${selectedProduct._id}`, updatedProduct);
+      const response = await axios.put(`http://localhost:3000/api/products/${selectedProduct?._id}`, updatedProduct);
       setSuccess('Sản phẩm cập nhật thành công!');
       setSelectedImages([]);
       setOldImages(combinedImages);
@@ -138,6 +140,9 @@ const ProductEditForm = ({ selectedProduct, setSelectedProduct }) => {
     //   setSelectedProduct(response.data);
     } catch (err) {
       setError('Failed to update product. Please try again.');
+    }
+    finally {
+      setIsProcessing(false); // Kết thúc xử lý và ẩn lớp overlay
     }
   };
 
@@ -307,8 +312,8 @@ const ProductEditForm = ({ selectedProduct, setSelectedProduct }) => {
           >
             <option value="">Danh mục (Thể loại)</option>
             {categories.map((category) => (
-              <option key={category._id} value={category._id}>
-                {category.name}
+              <option key={category?._id} value={category?._id}>
+                {category?.name}
               </option>
             ))}
           </select>
@@ -351,11 +356,11 @@ const ProductEditForm = ({ selectedProduct, setSelectedProduct }) => {
             </div>
           ))} */}
           {variants.map((variant, index) => (
-            <div key={index} className="p-4 border border-gray-300 rounded-md mb-4">
-              <div className="mb-4">
+            <div key={index} className="p-4 border border-gray-300 rounded-md mb-4 flex flex-col lg:flex-row gap-4">
+              <div className="mb-4 flex-1">
                 <label className="block font-medium mb-2">Màu sắc:</label>
                 <select
-                  value={variant.color}
+                  value={variant?.color}
                   onChange={(e) => handleVariantChange(index, 'color', e.target.value)}
                   required
                   className="w-full p-3 border border-gray-300 rounded-md"
@@ -370,17 +375,17 @@ const ProductEditForm = ({ selectedProduct, setSelectedProduct }) => {
                 <span
                   className="inline-block mt-3 border border-gray-200 rounded-sm cursor-pointer shadow-sm"
                   style={{
-                    width: variant.color ? '24px' : '0', 
-                    height: variant.color ? '24px' : '0',
-                    backgroundColor: variant.color ? colorMapping[variant.color] : 'transparent',
+                    width: variant?.color ? '24px' : '0', 
+                    height: variant?.color ? '24px' : '0',
+                    backgroundColor: variant?.color ? colorMapping[variant?.color] : 'transparent',
                   }}
                 ></span>
               </div>
 
-              <div className="mb-4">
+              <div className="mb-4 flex-1">
                 <label className="block font-medium mb-2">Size:</label>
                 <select
-                  value={variant.size}
+                  value={variant?.size}
                   onChange={(e) => handleVariantChange(index, 'size', e.target.value)}
                   required
                   className="w-full p-3 border border-gray-300 rounded-md"
@@ -394,11 +399,11 @@ const ProductEditForm = ({ selectedProduct, setSelectedProduct }) => {
                 </select>
               </div>
 
-              <div className="mb-4">
+              <div className="mb-4 flex-1">
                 <label className="block font-medium mb-2">Số lượng:</label>
                 <input
                   type="number"
-                  value={variant.stock}
+                  value={variant?.stock}
                   onChange={(e) => handleVariantChange(index, 'stock', e.target.value)}
                   min={1}
                   required
@@ -409,9 +414,9 @@ const ProductEditForm = ({ selectedProduct, setSelectedProduct }) => {
               <button
                 type="button"
                 onClick={() => removeVariant(index)}
-                className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
+                className="mt-9 bg-red-600 text-white px-4 h-10 rounded-md hover:bg-red-700"
               >
-                Xóa biến thể
+                <i class="fa-solid fa-xmark"></i>{/* Xóa biến thể */}
               </button>
             </div>
           ))}
@@ -428,12 +433,27 @@ const ProductEditForm = ({ selectedProduct, setSelectedProduct }) => {
         <div className="flex justify-center">
           <button
             type="submit"
-            className="bg-blue-500 text-white px-6 py-3 rounded-lg"
+            className="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-700"
           >
-            Lưu sản phẩm
+            {isProcessing ? "Đang xử lý..." : "Lưu sản phẩm"}
           </button>
         </div>
       </form>
+
+      {isProcessing && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            zIndex: 9999,
+            cursor: "not-allowed", 
+          }}
+        />
+      )}
     </div>
   );
 };

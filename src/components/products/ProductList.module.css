@@ -32,12 +32,20 @@
     padding: 15px;
     position: relative; 
     transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 350px;
   }
 
   .productImage {
     position: relative; 
     overflow: hidden; 
     margin: 0 auto;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .productImage img {
@@ -55,8 +63,19 @@
   .productDetails {
     font-size: 14px;
     line-height: 1.6;
+    height: auto;
+    margin-bottom: 10px;
   }
   
+  .productName {
+    font-weight: bold;
+    display: block;
+    height: auto; 
+    max-height: 3.5em; 
+    white-space: normal; 
+    word-wrap: break-word;
+  }
+
   @media (max-width: 768px) {
     .productGrid {
       flex-direction: column;

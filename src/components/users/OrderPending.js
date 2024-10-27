@@ -78,10 +78,10 @@ const OrderPending = () => {
       });
       // Cập nhật trạng thái đơn hàng sau khi hủy đơn
       const updatedOrders = orders.map((order) =>
-        order._id === orderId ? { 
+        order?._id === orderId ? { 
             ...order, 
             orderStatus: response.data.orderStatus, 
-            payment: { ...order.payment, status: response.data.payment.status }, 
+            payment: { ...order?.payment, status: response.data.payment?.status }, 
         } : order
       );
       setOrders(updatedOrders);
@@ -92,11 +92,11 @@ const OrderPending = () => {
 
   const renderActionButtons = (order) => {
     console.log('order được chọn', order);
-    if (order.payment.status === 'Chưa thanh toán'){
-      if (order.orderStatus === 'Đang xử lý' || (order.orderStatus === 'Đã xác nhận' && !order.errorTime)){
+    if (order?.payment?.status === 'Chưa thanh toán'){
+      if (order?.orderStatus === 'Đang xử lý' || (order?.orderStatus === 'Đã xác nhận' && !order?.errorTime)){
         return (
           <button
-            onClick={() => handleCancelOrder(order._id)}
+            onClick={() => handleCancelOrder(order?._id)}
             className="bg-red-500 text-white px-3 py-1 rounded ml-2 mt-2"
           >
             Hủy đơn
@@ -107,7 +107,7 @@ const OrderPending = () => {
   };
 
   // Tách đơn hàng theo trạng thái
-  const pendingOrders = orders.filter(order => order.orderStatus === 'Đang xử lý');
+  const pendingOrders = orders.filter(order => order?.orderStatus === 'Đang xử lý');
 
   // Tính toán trang
   const indexOfLastOrder = currentPage * ordersPerPage;
@@ -119,8 +119,8 @@ const OrderPending = () => {
     <div> 
       <h3 className="text-lg font-bold">Đơn hàng chờ xử lý</h3>
       {currentOrders.length > 0 ? currentOrders.map(order => (
-        <div key={order._id} className="border p-4 my-2">
-          <p>Mã đơn hàng: {order._id}</p>
+        <div key={order?._id} className="border p-4 my-2">
+          <p>Mã đơn hàng: {order?._id}</p>
           <div className="ml-4">
             {order?.items.map((item) => (
               <div key={item?.product?._id} className="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
@@ -128,15 +128,15 @@ const OrderPending = () => {
                   <img src={item?.product ? item?.product?.image : ''} alt={item?.product ? item?.product?.name : "Sản phẩm không khả dụng"} className="w-full" />
                 </Link>
                 <p>{item?.product?.name}</p> {/* Giả sử bạn có tên sản phẩm ở đây */}
-                <p>{item.quantity}</p>
-                <p>{item.price.toLocaleString()} VND</p>
-                <p>{item.color}</p>
-                <p>{item.size}</p>
+                <p>{item?.quantity}</p>
+                <p>{item?.price.toLocaleString()} VND</p>
+                <p>{item?.color}</p>
+                <p>{item?.size}</p>
               </div>
             ))}
           </div>
-          <p>Ngày đặt: {new Date(order.createdAt).toLocaleDateString()}</p>
-          <p>Tổng giá trị: {order.totalAmount.toLocaleString()} VND</p> 
+          <p>Ngày đặt: {new Date(order?.createdAt).toLocaleDateString()}</p>
+          <p>Tổng giá trị: {order?.totalAmount.toLocaleString()} VND</p> 
           <p>Trạng thái thanh toán: {order?.payment?.status}</p>  
           {renderActionButtons(order)}
         </div>

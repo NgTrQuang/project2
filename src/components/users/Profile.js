@@ -48,8 +48,9 @@ const Profile = () => {
                 <h4 className="text-xl font-semibold text-gray-800">{user?.fullName || 'Guest'}</h4>
               </div>
             </div>
-
+            
             <div className="space-y-4">
+            {user?.role === 'customer' &&
               <div className="space-y-2">
                 <a href="#" className="block font-medium text-gray-700 hover:text-primary transition">
                   Quản lý tài khoản
@@ -72,7 +73,8 @@ const Profile = () => {
                   Đổi mật khẩu
                 </a>
               </div>
-
+            }
+            {user?.role === 'customer' &&
               <div className="pt-4 space-y-1">
                 <a href="#" className="block font-medium text-gray-700 hover:text-primary transition">
                   Lịch sử đơn hàng
@@ -116,8 +118,9 @@ const Profile = () => {
                   Đánh giá của bạn
                 </a> */}
               </div>
-              {/* ADMIN */}
-              {user?.role === 'admin' &&
+            }
+            {/* ADMIN */}
+            {user?.role === 'admin' &&
               <>
                 <div className="pt-4 space-y-1">
                   <a href="#" className="block font-medium text-gray-700 hover:text-primary transition">
@@ -203,8 +206,8 @@ const Profile = () => {
                   </a>
                 </div>
               </>
-              }
-              {/* ADMIN */}
+            }
+            {/* ADMIN */}
 
               {/* <div className="pt-4 space-y-1">
                 <a href="#" className="block font-medium text-gray-700 hover:text-primary transition">

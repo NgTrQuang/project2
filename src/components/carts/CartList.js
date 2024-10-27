@@ -189,56 +189,56 @@ const CartList = () => {
         <div className="space-y-4">
             {cartItems && cartItems.length > 0 ? (
                 cartItems.map((item) => (
-                    <div key={item._id} className="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
+                    <div key={item?._id} className="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
                         {/* Checkbox */}
                         <input
                             type="checkbox"
-                            checked={selectedItems.includes(item._id)} // Kiểm tra sản phẩm có được chọn không
-                            onChange={() => handleSelectItem(item._id)} // Xử lý khi thay đổi trạng thái checkbox
+                            checked={selectedItems.includes(item?._id)} // Kiểm tra sản phẩm có được chọn không
+                            onChange={() => handleSelectItem(item?._id)} // Xử lý khi thay đổi trạng thái checkbox
                         />
                         
                         {/* Product Image */}
-                        <Link to={item?.product?._id ? `/products/details/${item.product._id}` : '#'} className="w-28">
-                            <img src={item.product ? item.product.image : ''} alt={item.product ? item.product.name : "Sản phẩm không khả dụng"} className="w-full" />
-                            <h2 className="text-gray-800 text-xl font-medium uppercase">{item.product ? item.product.name : "Sản phẩm không khả dụng"}</h2>
+                        <Link to={item?.product?._id ? `/products/details/${item?.product?._id}` : '#'} className="w-28">
+                            <img src={item?.product ? item?.product?.image : ''} alt={item?.product ? item?.product?.name : "Sản phẩm không khả dụng"} className="w-full" />
+                            <h2 className="text-gray-800 text-xl font-medium uppercase">{item?.product ? item?.product?.name : "Sản phẩm không khả dụng"}</h2>
                         </Link>
 
                         {/* Product Details */}
                         <div className={styles.itemOptions}>
                             <select 
-                                value={item.color} 
-                                onChange={(e) => handleColorChange(item._id, e.target.value)}
+                                value={item?.color} 
+                                onChange={(e) => handleColorChange(item?._id, e.target.value)}
                                 className={styles.dropdownSelect}
                             >
-                                {[...new Set(item?.product?.variants.map(variant => variant.color))].map((color, index) => (
+                                {[...new Set(item?.product?.variants.map(variant => variant?.color))].map((color, index) => (
                                 <option key={index} value={color}>{color}</option>
                                 ))}
                             </select>
 
                             {/* Dropdown chọn size */}
                             <select 
-                                value={item.size} 
-                                onChange={(e) => handleSizeChange(item._id, e.target.value)}
+                                value={item?.size} 
+                                onChange={(e) => handleSizeChange(item?._id, e.target.value)}
                                 className={styles.dropdownSelect}
                             >
-                                {[...new Set(item?.product?.variants.map(variant => variant.size))].map((size, index) => (
+                                {[...new Set(item?.product?.variants.map(variant => variant?.size))].map((size, index) => (
                                 <option key={index} value={size}>{size}</option>
                                 ))}
                             </select>
                         </div>
                         <QuantitySelector
-                            quantity={item.quantity}
-                            onQuantityChange={(newQuantity) => handleQuantityChange(item._id, newQuantity)}
-                            onRemove={() => removeFromCart(item._id)}
-                            selectedColor={item.color}
-                            selectedSize={item.size}
-                            selectedProduct={item.product} // Dùng item thay vì cartItem
+                            quantity={item?.quantity}
+                            onQuantityChange={(newQuantity) => handleQuantityChange(item?._id, newQuantity)}
+                            onRemove={() => removeFromCart(item?._id)}
+                            selectedColor={item?.color}
+                            selectedSize={item?.size}
+                            selectedProduct={item?.product} // Dùng item thay vì cartItem
                         />
                         {/* Product Price */}
-                        <div className="text-primary text-lg font-semibold">{item?.product ? item.product.price.toLocaleString() : 'N/A'} VND</div>
+                        <div className="text-primary text-lg font-semibold">{item?.product ? item?.product?.price.toLocaleString() : 'N/A'} VND</div>
 
                         {/* Xóa sản phẩm khỏi giỏ hàng */}
-                        <div className="text-gray-600 cursor-pointer hover:text-primary" onClick={() => removeFromCart(item._id)}>
+                        <div className="text-gray-600 cursor-pointer hover:text-primary" onClick={() => removeFromCart(item?._id)}>
                             <FontAwesomeIcon icon={faTrash} />
                         </div>
                     </div>

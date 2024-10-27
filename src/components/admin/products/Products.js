@@ -21,9 +21,9 @@ function Products() {
   }
   return (
     <div>    
-      <button className='ml-8' onClick={() => handleChangeTab('addProduct')}>Thêm sản phẩm</button>
+      <button className='mb-4 ml-8 bg-blue-200 px-2 py-1 rounded' onClick={() => handleChangeTab('addProduct')}>Thêm sản phẩm</button>
       {/* <button className='ml-8' onClick={() => handleChangeTab('editProduct')}>Chỉnh sửa sản phẩm</button> */}
-      <button className='ml-8' onClick={() => handleChangeTab('allProducts')}>Danh sách sản phẩm</button>
+      <button className='mb-4 ml-6 bg-blue-200 px-2 py-1 rounded' onClick={() => handleChangeTab('allProducts')}>Danh sách sản phẩm</button>
       {activeTab === 'allProducts' && <AllProducts onEdit={handleEditProduct}/>}
       {activeTab === 'addProduct' && <ProductForm />}
       {activeTab === 'editProduct' && <ProductEditForm selectedProduct={selectedProduct} setSelectedProduct={setSelectedProduct}/>}

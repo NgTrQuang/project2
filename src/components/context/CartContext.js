@@ -24,12 +24,12 @@ export const CartProvider = ({ children }) => {
       });
       // Cập nhật trạng thái cartItems sau khi thêm thành công
       setCartItems(prevItems => {
-        const existingProduct = prevItems.find(item => item.productId === productId);
+        const existingProduct = prevItems.find(item => item?.productId === productId);
 
         if (existingProduct) {
           return prevItems.map(item =>
             item.productId === productId
-              ? { ...item, quantity: item.quantity + quantity }
+              ? { ...item, quantity: item?.quantity + quantity }
               : item
           );
         } else {
@@ -62,7 +62,7 @@ export const CartProvider = ({ children }) => {
         quantity
       });
       // Cập nhật lại giỏ hàng sau khi cập nhật
-      setCartItems(response.data.cart);
+      setCartItems(response.data?.cart);
     } catch (error) {
       console.error('Lỗi khi cập nhật giỏ hàng:', error);
     }

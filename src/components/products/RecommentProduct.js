@@ -25,8 +25,10 @@ const RecommentProduct = () => {         //{ onAddToCart }
   };
 
   useEffect(() => {          
+    if (products.length > 0) { 
       fetchProducts();
-  }, [products]);
+    }
+  }, [products.length]);
   
   const fetchProducts = async () => {
       try {
@@ -115,27 +117,27 @@ const RecommentProduct = () => {         //{ onAddToCart }
       // </div>
       <div className={`${styles.productGrid} mt-6`}>
       { (suggestedProducts.map((product) => 
-        <div key={product._id} className="bg-white shadow rounded overflow-hidden group">
+        <div key={product?._id} className="bg-white shadow rounded overflow-hidden group">
           {/* <div className={styles.productImage}>
             <strong>{product.name}</strong> - {product.price} VND
           </div> */}
           <div className="relative">
             <div className={styles.productImage}>
               <img
-                src={product.image}
-                alt={product.name}
+                src={product?.image}
+                alt={product?.name}
                 style={{ width: '280px', height: '280px' }}
               />
               <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
                 <Link
-                  to={`/products/details/${product._id}`} // Chuyển đến trang chi tiết sản phẩm
+                  to={`/products/details/${product?._id}`} // Chuyển đến trang chi tiết sản phẩm
                   className="text-black text-lg w-9 h-8 rounded-full bg-white flex items-center justify-center hover:bg-primary transition"
                   title="Xem chi tiết"
                 >
                   <FontAwesomeIcon icon={faEye} /> 
                 </Link>
                 <a
-                  onClick={() => addToFavorites(product._id)}
+                  onClick={() => addToFavorites(product?._id)}
                   className="text-black text-lg w-9 h-8 rounded-full bg-white flex items-center justify-center hover:bg-primary transition"
                   title="Thêm vào yêu thích"
                   // Xử lý thêm vào danh sách yêu thích tại đây
@@ -146,8 +148,8 @@ const RecommentProduct = () => {         //{ onAddToCart }
             </div>
           </div>
           <div className={styles.productDetails}>
-            <strong>{product.name}</strong>
-            <p>Giá: {product.price.toLocaleString()} VND</p>
+            <strong className={`${styles.productName} ml-2 mr-2`}>{product?.name}</strong>
+            <p className='ml-2 mr-2'>Giá: {product?.price.toLocaleString()} VND</p>
             {/* <p>Mô tả: {product.description || 'Không có mô tả'}</p> */}
             {/* <p>Kích thước: {product.size.join(', ')}</p>
             <p>Màu sắc: {product.color.join(', ')}</p> */}
@@ -158,7 +160,7 @@ const RecommentProduct = () => {         //{ onAddToCart }
             </button> */}
             {/* <AddToCartButton userId={userId} productId={product._id} quantity={quantity}/> */}
             <Link
-              to={`/products/details/${product._id}`} // Chuyển đến trang chi tiết sản phẩm
+              to={`/products/details/${product?._id}`} // Chuyển đến trang chi tiết sản phẩm
               className=""
               title="Mua ngay"
             >

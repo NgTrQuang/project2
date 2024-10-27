@@ -17,6 +17,8 @@ const ProductForm = () => {
   const [images, setImages] = useState([]); // Thêm state để lưu trữ hình ảnh
   const [selectedImages, setSelectedImages] = useState([]);
 
+  const [isProcessing, setIsProcessing] = useState(false);
+
   // Lấy danh sách các danh mục từ server
   useEffect(() => {
     const fetchCategories = async () => {
@@ -86,7 +88,7 @@ const ProductForm = () => {
     e.preventDefault();
     setError('');
     setSuccess('');
-
+    setIsProcessing(true);
     // Tải lên hình ảnh và lấy URL
     const imageUrls = await uploadImages();
 
@@ -111,6 +113,9 @@ const ProductForm = () => {
       setSelectedImages([]);
     } catch (err) {
       setError('Failed to add product. Please try again.');
+    }
+    finally {
+      setIsProcessing(false); // Kết thúc xử lý và ẩn lớp overlay
     }
   };
 
@@ -255,8 +260,8 @@ const sizeMapping = [
           >
             <option value="">Danh mục (Thể loại)</option>
             {categories.map((cat) => (
-              <option key={cat._id} value={cat._id}>
-                {cat.name}
+              <option key={cat?._id} value={cat?._id}>
+                {cat?.name}
               </option>
             ))}
           </select>
@@ -269,7 +274,7 @@ const sizeMapping = [
               <div className="mb-4 flex-1">
                 <label className="block font-medium mb-2">Màu sắc:</label>
                 <select
-                  value={variant.color}
+                  value={variant?.color}
                   onChange={(e) => handleVariantChange(index, 'color', e.target.value)}
                   required
                   className="w-full p-3 border border-gray-300 rounded-md"
@@ -284,9 +289,9 @@ const sizeMapping = [
                 <span
                   className="inline-block mt-3 border border-gray-200 rounded-sm cursor-pointer shadow-sm"
                   style={{
-                    width: variant.color ? '24px' : '0', 
-                    height: variant.color ? '24px' : '0',
-                    backgroundColor: variant.color ? colorMapping[variant.color] : 'transparent',
+                    width: variant?.color ? '24px' : '0', 
+                    height: variant?.color ? '24px' : '0',
+                    backgroundColor: variant?.color ? colorMapping[variant?.color] : 'transparent',
                   }}
                 ></span>
               </div>
@@ -294,7 +299,7 @@ const sizeMapping = [
               <div className="mb-4 flex-1">
                 <label className="block font-medium mb-2">Size:</label>
                 <select
-                  value={variant.size}
+                  value={variant?.size}
                   onChange={(e) => handleVariantChange(index, 'size', e.target.value)}
                   required
                   className="w-full p-3 border border-gray-300 rounded-md"
@@ -312,7 +317,7 @@ const sizeMapping = [
                 <label className="block font-medium mb-2">Số lượng:</label>
                 <input
                   type="number"
-                  value={variant.stock}
+                  value={variant?.stock}
                   onChange={(e) => handleVariantChange(index, 'stock', e.target.value)}
                   min={1}
                   required
@@ -325,7 +330,7 @@ const sizeMapping = [
                 onClick={() => removeVariant(index)}
                 className="mt-9 bg-red-600 text-white px-4 h-10 rounded-md hover:bg-red-700"
               >
-                Xóa biến thể
+                <i class="fa-solid fa-xmark"></i>{/* Xóa biến thể */}
               </button>
             </div>
           ))}
@@ -343,9 +348,24 @@ const sizeMapping = [
           type="submit"
           className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700"
         >
-          Thêm sản phẩm
+          {isProcessing ? "Đang xử lý..." : "Thêm sản phẩm"}
         </button>
       </form>
+      
+      {isProcessing && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            zIndex: 9999,
+            cursor: "not-allowed", 
+          }}
+        />
+      )}
     </div>
   );
 };

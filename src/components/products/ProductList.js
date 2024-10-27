@@ -90,7 +90,7 @@ const ProductList = () => {         //{ onAddToCart }
     }
   };
   // const filteredProducts = products.filter((product) =>
-  //   product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  //   product?.name.toLowerCase().includes(searchTerm.toLowerCase())
   // );
   // Tính toán chỉ số sản phẩm cho trang hiện tại
   const indexOfLastProduct = currentPage * productsPerPage;
@@ -113,27 +113,27 @@ const ProductList = () => {         //{ onAddToCart }
       <div className={`${styles.productGrid} mt-6`}>
         {currentProducts.length > 0 ? 
           (currentProducts.map((product) => (
-          <div key={product._id} className={`bg-white shadow rounded overflow-hidden group`}>
+          <div key={product?._id} className={`bg-white shadow rounded overflow-hidden group`}>
             {/* <div className={styles.productImage}>
-              <strong>{product.name}</strong> - {product.price} VND
+              <strong>{product?.name}</strong> - {product?.price} VND
             </div> */}
             <div className="relative">
               <div className={styles.productImage}>
                 <img
-                  src={product.image}
-                  alt={product.name}
+                  src={product?.image}
+                  alt={product?.name}
                   style={{ width: '280px', height: '280px' }}
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
                   <Link
-                    to={`/products/details/${product._id}`} // Chuyển đến trang chi tiết sản phẩm
+                    to={`/products/details/${product?._id}`} // Chuyển đến trang chi tiết sản phẩm
                     className="text-black text-lg w-9 h-8 rounded-full bg-white flex items-center justify-center hover:bg-primary transition"
                     title="Xem chi tiết"
                   >
                     <FontAwesomeIcon icon={faEye} /> 
                   </Link>
                   <a
-                    onClick={() => addToFavorites(product._id)}
+                    onClick={() => addToFavorites(product?._id)}
                     className="text-black text-lg w-9 h-8 rounded-full bg-white flex items-center justify-center hover:bg-primary transition"
                     title="Thêm vào yêu thích"
                     // Xử lý thêm vào danh sách yêu thích tại đây
@@ -144,11 +144,11 @@ const ProductList = () => {         //{ onAddToCart }
               </div>
             </div>
             <div className={styles.productDetails}>
-              <strong>{product.name}</strong>
-              <p>Giá: {product.price.toLocaleString()} VND</p>
-              {/* <p>Mô tả: {product.description || 'Không có mô tả'}</p> */}
-              {/* <p>Kích thước: {product.size.join(', ')}</p>
-              <p>Màu sắc: {product.color.join(', ')}</p> */}
+              <strong className={`${styles.productName} ml-2 mr-2`}>{product?.name}</strong>
+              <p className='ml-2 mr-2'>Giá: {product?.price.toLocaleString()} VND</p>
+              {/* <p>Mô tả: {product?.description || 'Không có mô tả'}</p> */}
+              {/* <p>Kích thước: {product?.size.join(', ')}</p>
+              <p>Màu sắc: {product?.color.join(', ')}</p> */}
               {/* <button
                 className="mt-2 w-full py-2 bg-primary text-white rounded transition duration-300 hover:bg-secondary" 
               >
@@ -164,19 +164,19 @@ const ProductList = () => {         //{ onAddToCart }
               {isModalOpen && selectedProduct && (
                 <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 z-50">
                     <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-                        <h1 className="text-lg font-semibold mb-4">{selectedProduct.name}</h1>
+                        <h1 className="text-lg font-semibold mb-4">{selectedProduct?.name}</h1>
                         <h2 className="text-lg font-semibold mb-4">Chọn màu sắc và kích thước</h2>
                         {/* Dropdown chọn kích thước */}
                         <label className="block mb-2">Chọn kích thước:</label>
                         <SizeList 
-                          sizes={[...new Set(selectedProduct.variants.map(variant => variant.size))]} 
+                          sizes={[...new Set(selectedProduct?.variants.map(variant => variant?.size))]} 
                           selectedSize={selectedSize}
                           handleSizeChange={handleSizeChange}
                         />
                         {/* Dropdown chọn màu sắc */}
                         <label className="block mb-2">Chọn màu sắc:</label>
                         <ColorList 
-                          colors={[...new Set(selectedProduct.variants.map(variant => variant.color))]} 
+                          colors={[...new Set(selectedProduct?.variants.map(variant => variant?.color))]} 
                           selectedColor={selectedColor}
                           handleColorChange={handleColorChange}
                         />
@@ -192,7 +192,7 @@ const ProductList = () => {         //{ onAddToCart }
                         {/* Nút Thêm vào giỏ hàng */}
                         <AddToCartButton 
                           userId={userId} 
-                          productId={selectedProduct._id} 
+                          productId={selectedProduct?._id} 
                           quantity={quantity} 
                           size={selectedSize}
                           color={selectedColor} 
@@ -209,7 +209,7 @@ const ProductList = () => {         //{ onAddToCart }
               )}
             </div>
           </div>
-          // <ProductCard key={product._id} product={product}/>
+          // <ProductCard key={product?._id} product={product}/>
             ))
         ) : (
           <p>Không tìm thấy sản phẩm</p>

@@ -23,15 +23,15 @@ const Checkout = () => {
             const orderData = {
                 user: userId, // Truyền userId vào API
                 totalAmount: totalPrice,
-                shippingAddress: user.address, // Địa chỉ giao hàng
+                shippingAddress: user?.address, // Địa chỉ giao hàng
                 paymentMethod: paymentMethod,     // Phương thức thanh toán
                 items: selectedItems.map(id => ({
                     _id: id,
-                    product: cartItems.find(item => item._id === id).product._id,
-                    quantity: cartItems.find(item => item._id === id).quantity,
-                    price: cartItems.find(item => item._id === id).product.price,
-                    size: cartItems.find(item => item._id === id).size,
-                    color: cartItems.find(item => item._id === id).color, 
+                    product: cartItems.find(item => item?._id === id)?.product?._id,
+                    quantity: cartItems.find(item => item?._id === id)?.quantity,
+                    price: cartItems.find(item => item?._id === id)?.product?.price,
+                    size: cartItems.find(item => item?._id === id)?.size,
+                    color: cartItems.find(item => item?._id === id)?.color, 
                 })),
             };
             console.log('Truyền đi', orderData);
@@ -75,19 +75,19 @@ const Checkout = () => {
                 <i className="fa-solid fa-location-dot mr-2"></i>
                 Địa chỉ nhận hàng
             </h3>
-                <p className="p-1 w-full mb-2 ml-4">{user.fullName}</p>
-                <p className="p-1 w-full mb-2 ml-4">{user.address}</p>
-                <p className="p-1 w-full mb-2 ml-4">{user.phoneNumber}</p>
+                <p className="p-1 w-full mb-2 ml-4">{user?.fullName}</p>
+                <p className="p-1 w-full mb-2 ml-4">{user?.address}</p>
+                <p className="p-1 w-full mb-2 ml-4">{user?.phoneNumber}</p>
             </div>
             <div className="space-y-4">
                 {cartItems.map(item => (
-                    selectedItems.includes(item._id) && (
-                        <div key={item._id} className="flex justify-between border p-4 rounded">
-                            <img src={item.product.image} alt={item.product.name} className="w-24" />
+                    selectedItems.includes(item?._id) && (
+                        <div key={item?._id} className="flex justify-between border p-4 rounded">
+                            <img src={item?.product?.image} alt={item?.product?.name} className="w-24" />
                             <div className="flex flex-col">
-                                <h2 className="font-semibold">{item.product.name}</h2>
-                                <p>Số lượng: {item.quantity}</p>
-                                <p>Giá: {item.product.price.toLocaleString()} VND</p>
+                                <h2 className="font-semibold">{item?.product?.name}</h2>
+                                <p>Số lượng: {item?.quantity}</p>
+                                <p>Giá: {item?.product?.price.toLocaleString()} VND</p>
                             </div>
                         </div>
                     )

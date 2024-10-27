@@ -31,10 +31,10 @@ const QuantitySelector = ({ quantity, onQuantityChange, onRemove, selectedColor,
 
   const getAvailableStock = () => {
     // Tìm variant có cùng màu và size mà người dùng đã chọn
-    const variant = selectedProduct.variants.find(
-      (variant) => variant.color === selectedColor && variant.size === selectedSize
+    const variant = selectedProduct?.variants.find(
+      (variant) => variant?.color === selectedColor && variant?.size === selectedSize
     );
-    return variant ? variant.stock : 0; // Trả về stock của variant hoặc 0 nếu không tìm thấy
+    return variant ? variant?.stock : 0; // Trả về stock của variant hoặc 0 nếu không tìm thấy
   };
 
   const handleDecrease = () => {

@@ -149,8 +149,8 @@ const AddressSelector = () => {
             >
                 <option value="">Chọn tỉnh/thành phố</option>
                 {provinces.map((province) => (
-                    <option key={province.code} value={province.code}>
-                        {province.name}
+                    <option key={province?.code} value={province?.code}>
+                        {province?.name}
                     </option>
                 ))}
             </select>
@@ -165,8 +165,8 @@ const AddressSelector = () => {
             >
                 <option value="">Chọn quận/huyện</option>
                 {districts.map((district) => (
-                    <option key={district.code} value={district.code}>
-                        {district.name}
+                    <option key={district?.code} value={district?.code}>
+                        {district?.name}
                     </option>
                 ))}
             </select>
@@ -181,8 +181,8 @@ const AddressSelector = () => {
             >
                 <option value="">Chọn phường/xã</option>
                 {wards.map((ward) => (
-                    <option key={ward.code} value={ward.code}>
-                        {ward.name}
+                    <option key={ward?.code} value={ward?.code}>
+                        {ward?.name}
                     </option>
                 ))}
             </select>

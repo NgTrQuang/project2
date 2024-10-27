@@ -56,14 +56,14 @@ const ProductDetails = () => {
 
   // Hàm để chuyển ảnh khi click mũi tên trái
   const handlePrev = () => {
-    const newIndex = (currentIndex - 1 + product.image.length) % product.image.length;
+    const newIndex = (currentIndex - 1 + product?.image.length) % product?.image.length;
     setCurrentIndex(newIndex);
-    setSelectedImage(product.image[newIndex]);
+    setSelectedImage(product?.image[newIndex]);
   };
 
   // Hàm để chuyển ảnh khi click mũi tên phải
   const handleNext = () => {
-    const newIndex = (currentIndex + 1) % product.image.length;
+    const newIndex = (currentIndex + 1) % product?.image.length;
     setCurrentIndex(newIndex);
     setSelectedImage(product.image[newIndex]);
   };
@@ -73,7 +73,7 @@ const ProductDetails = () => {
     const images = [];
     for (let i = 0; i < 5; i++) {
       const index = (currentIndex + i) % totalImages;
-      images.push(product.image[index]);
+      images.push(product?.image[index]);
     }
     return images;
   };
@@ -87,7 +87,7 @@ const ProductDetails = () => {
           <div className="product-image">
             <img 
             src={selectedImage} 
-            alt={product.name} 
+            alt={product?.name} 
             className="w-full h-auto rounded-md object-cover" />
             <div className="flex justify-between mt-4">
               <button
@@ -97,7 +97,7 @@ const ProductDetails = () => {
                 &#8592; 
               </button>
               <div className="grid grid-cols-5 gap-4 mt-4"> 
-              {getVisibleImages(currentIndex, product.image.length).map((image, index) => (
+              {getVisibleImages(currentIndex, product?.image.length).map((image, index) => (
                 <img 
                   key={index} 
                   src={image} 
@@ -119,13 +119,13 @@ const ProductDetails = () => {
             <h3 className="text-xl font-medium mb-4 mt-4">Mô tả sản phẩm</h3>
             <div
               className="text-gray-600"
-              dangerouslySetInnerHTML={{ __html: product.description }}
+              dangerouslySetInnerHTML={{ __html: product?.description }}
             />
           </div>         
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="product-info">
-            <h2 className="text-3xl font-medium mb-4 mt-8">{product.name}</h2>
+            <h2 className="text-3xl font-medium mb-4 mt-8">{product?.name}</h2>
             <div className="flex items-center mb-4">
               <div className="flex gap-1 text-sm text-yellow-400">
                 {Array(5).fill().map((_, index) => (
@@ -138,20 +138,20 @@ const ProductDetails = () => {
             <div className="space-y-2">
               <p className="space-x-2">
                 <span className="text-gray-800 font-semibold">Thể loại</span>
-                <span className="text-gray-600">{product.category.name}</span>
+                <span className="text-gray-600">{product?.category?.name}</span>
               </p>
             </div>
             <div className="flex items-baseline mb-1 space-x-2 font-roboto mt-4">
               <span className="text-gray-800 font-semibold">Giá: </span>
-              <p className="text-xl text-primary font-semibold">{product.price} VND</p>
+              <p className="text-xl text-primary font-semibold">{product?.price} VND</p>
             </div>
             <ColorList 
-              colors={product ? [...new Set(product?.variants.map(variant => variant.color))] : []} 
+              colors={product ? [...new Set(product?.variants?.map(variant => variant?.color))] : []} 
               selectedColor={selectedColor}
               handleColorChange={handleColorChange}
             />
             <SizeList 
-              sizes={product ? [...new Set(product?.variants.map(variant => variant.size))] : []} 
+              sizes={product ? [...new Set(product?.variants?.map(variant => variant?.size))] : []} 
               selectedSize={selectedSize}
               handleSizeChange={handleSizeChange}
             />

@@ -18,9 +18,9 @@ export const UserProvider = ({ children }) => {
       try {
         const decoded = jwtDecode(token); // Giải mã token
         // setUser(decoded); // Giả sử thông tin người dùng có trong payload của token
-        if (decoded && decoded._id) {
+        if (decoded && decoded?._id) {
           setUser(decoded);
-          setUserId(decoded._id);
+          setUserId(decoded?._id);
         }
       } catch (error) {
         console.error('Failed to decode token:', error);
@@ -36,8 +36,8 @@ export const UserProvider = ({ children }) => {
               },
               timeout: 5000, // Thêm timeout để tránh các API call kéo dài
             });
-            setUser(response.data.user);
-            setUserId(response.data.user._id);
+            setUser(response.data?.user);
+            setUserId(response.data?.user?._id);
           } catch (error) {
             console.error('Failed to fetch user data:', error);
           }
@@ -50,7 +50,7 @@ export const UserProvider = ({ children }) => {
 
   const login = (userData) => {
     setUser(userData);
-    setUserId(userData._id);
+    setUserId(userData?._id);
   };
 
   const logout = () => {
