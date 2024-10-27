@@ -50,10 +50,10 @@ const sendOrderConfirmationEmail = async (order) => {
 
     // Tạo tùy chọn email
     const mailOptions = {
-      from: 'rafcartshop@gmail.com', // Địa chỉ người gửi
-      to: user.email, // Địa chỉ người nhận (người mua)
+      from: '"Spring Shopping Mall" <springshoppingmall@gmail.com>', // Địa chỉ người gửi
+      to: user.email, 
       subject: 'Xác nhận đơn hàng của bạn',
-      html: emailHTML, // Gán nội dung HTML vào thuộc tính html
+      html: emailHTML, 
     };
 
     // Gửi email
