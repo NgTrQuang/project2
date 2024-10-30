@@ -174,7 +174,7 @@ const RecommentProduct = () => {         //{ onAddToCart }
           </div>
         </div>
       ))}
-      <ToastContainer/>
+      <ToastContainer limit={3}/>
       </div>
   );
 };

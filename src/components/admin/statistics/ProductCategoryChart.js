@@ -20,8 +20,8 @@ const ProductCategoryChart = () => {
         const productCounts = [];
 
         data.forEach(stat => {
-          categories.push(stat._id); // category id (hoặc có thể load tên category dựa vào id)
-          productCounts.push(stat.count);
+          categories.push(stat?._id); // category id (hoặc có thể load tên category dựa vào id)
+          productCounts.push(stat?.count);
         });
 
         setChartData({

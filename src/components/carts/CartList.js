@@ -33,7 +33,7 @@ const CartList = () => {
             setCartItems(response.data.products);
             console.log(response.data.products);
             // const initialQuantities = response.data.products.reduce((acc, item) => {
-            //     acc[item.product._id] = item.quantity;
+            //     acc[item?.product?._id] = item?.quantity;
             //     return acc;
             // }, {});
             // setQuantities(initialQuantities);
@@ -48,7 +48,7 @@ const CartList = () => {
         try {
             await axios.delete(`http://localhost:3000/api/cart/${userId}/product/${cartId}`);
             setCartItems((prevItems) => {
-                const updatedItems = prevItems.filter(item => item._id !== cartId);
+                const updatedItems = prevItems.filter(item => item?._id !== cartId);
                 // Kiểm tra xem sản phẩm bị xóa có nằm trong selectedItems không
                 if (selectedItems.includes(cartId)) {
                     setSelectedItems(prevSelected => prevSelected.filter(id => id !== cartId)); // Bỏ chọn sản phẩm đã xóa
@@ -87,7 +87,7 @@ const CartList = () => {
                 console.log(response.data.cartItems.products);
 
                 // setCartItems(prevItems => prevItems.map(item => 
-                //     item._id === updatedCartItem._id ? updatedCartItem : item
+                //     item?._id === updatedCartItem._id ? updatedCartItem : item
                 // ));
                 setCartItems(updatedCartItem);
                 // toast.success("Giỏ hàng đã được cập nhật", {
@@ -110,12 +110,12 @@ const CartList = () => {
         // Tìm item trong cartItems và cập nhật số lượng
         setCartItems(prevItems =>
             prevItems.map(item =>
-                item._id === cartId ? { ...item, quantity: newQuantity } : item
+                item?._id === cartId ? { ...item, quantity: newQuantity } : item
             )
         );
-        const updatedItem = cartItems.find(item => item._id === cartId);
+        const updatedItem = cartItems.find(item => item?._id === cartId);
         if (updatedItem) {
-            handleUpdateCartItem(userId, updatedItem._id, updatedItem.color, updatedItem.size, newQuantity);
+            handleUpdateCartItem(userId, updatedItem?._id, updatedItem?.color, updatedItem?.size, newQuantity);
         }
         calculateTotalPrice();
     };    
@@ -124,40 +124,40 @@ const CartList = () => {
     const handleColorChange = (cartId, newColor) => {
         setCartItems(prevItems => 
             prevItems.map(item => 
-              item._id === cartId ? { ...item, color: newColor } : item
+              item?._id === cartId ? { ...item, color: newColor } : item
             )
         );
-        const updatedItem = cartItems.find(item => item._id === cartId);
+        const updatedItem = cartItems.find(item => item?._id === cartId);
         if (updatedItem) {
-            handleUpdateCartItem(userId, updatedItem._id, newColor, updatedItem.size, updatedItem.quantity);
+            handleUpdateCartItem(userId, updatedItem?._id, newColor, updatedItem?.size, updatedItem?.quantity);
         }
     };
     //Size
     const handleSizeChange = (cartId, newSize) => {
         setCartItems(prevItems => 
             prevItems.map(item => 
-              item._id === cartId ? { ...item, size: newSize } : item
+              item?._id === cartId ? { ...item, size: newSize } : item
             )
         );
-        const updatedItem = cartItems.find(item => item._id === cartId);
+        const updatedItem = cartItems.find(item => item?._id === cartId);
         if (updatedItem) {
-            handleUpdateCartItem(userId, updatedItem._id, updatedItem.color, newSize, updatedItem.quantity);
+            handleUpdateCartItem(userId, updatedItem?._id, updatedItem?.color, newSize, updatedItem?.quantity);
         }
     };
 
     // Hàm tính tổng giá trị của các sản phẩm đã chọn
     const calculateTotalPrice = () => {
         const validSelectedItems = selectedItems.filter(cartId => {
-            return cartItems.some(item => item._id === cartId); // Kiểm tra xem sản phẩm còn tồn tại trong cartItems không
+            return cartItems.some(item => item?._id === cartId); // Kiểm tra xem sản phẩm còn tồn tại trong cartItems không
         });
     
         const total = validSelectedItems.reduce((sum, cartId) => {
-            const selectedItem = cartItems.find(item => item._id === cartId);
+            const selectedItem = cartItems.find(item => item?._id === cartId);
             if (selectedItem) {
                 // Lấy số lượng từ state quantities, nếu không có thì mặc định là số lượng ban đầu
-                const itemQuantity = selectedItem.quantity || 0; //quantities[selectedItem.product._id]
+                const itemQuantity = selectedItem?.quantity || 0; //quantities[selectedItem?.product?._id]
                 // Tính tổng giá cho từng sản phẩm đã chọn
-                return sum + (selectedItem.product.price * itemQuantity);
+                return sum + (selectedItem?.product?.price * itemQuantity);
             }
         }, 0);
         setTotalPrice(total);

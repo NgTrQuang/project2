@@ -35,8 +35,8 @@ const OrderStatusTable = () => {
         <tbody>
           {orderStatusData.map((status, index) => (
             <tr key={index}>
-              <td className="py-2 px-4 border">{status._id}</td>
-              <td className="py-2 px-4 border">{status.count}</td>
+              <td className="py-2 px-4 border">{status?._id}</td>
+              <td className="py-2 px-4 border">{status?.count}</td>
             </tr>
           ))}
         </tbody>

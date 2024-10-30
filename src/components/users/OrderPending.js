@@ -80,8 +80,8 @@ const OrderPending = () => {
       const updatedOrders = orders.map((order) =>
         order?._id === orderId ? { 
             ...order, 
-            orderStatus: response.data.orderStatus, 
-            payment: { ...order?.payment, status: response.data.payment?.status }, 
+            orderStatus: response.data?.orderStatus, 
+            payment: { ...order?.payment, status: response.data?.payment?.status }, 
         } : order
       );
       setOrders(updatedOrders);
@@ -149,7 +149,7 @@ const OrderPending = () => {
           paginate={(pageNumber) => setCurrentPage(pageNumber)} // Cập nhật trang hiện tại
         />
       }
-      <ToastContainer />
+      <ToastContainer limit={3}/>
     </div>
   );
 };

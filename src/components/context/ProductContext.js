@@ -21,7 +21,7 @@ export const ProductProvider = ({ children }) => {
   };
 
   const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    product?.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (

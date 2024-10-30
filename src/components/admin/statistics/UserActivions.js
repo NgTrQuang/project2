@@ -15,9 +15,9 @@ const UserActivions = () => {
       try {
         const response = await axios.get('http://localhost:3000/api/statistics/users/active');
         setUsersData({
-          total: response.data.totalUsers,
-          active: response.data.activeUsers,
-          inactive: response.data.inactiveUsers,
+          total: response.data?.totalUsers,
+          active: response.data?.activeUsers,
+          inactive: response.data?.inactiveUsers,
         });
       } catch (error) {
         console.error('Lỗi khi lấy dữ liệu người dùng:', error);

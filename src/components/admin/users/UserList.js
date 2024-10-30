@@ -17,7 +17,7 @@ const UserList = () => {
               Authorization: `Bearer ${token}`, // Thêm token vào headers
             },
         });
-        setUsers(response.data.users); // Gán dữ liệu vào state
+        setUsers(response.data?.users); // Gán dữ liệu vào state
         setLoading(false);
       } catch (error) {
         console.error('Failed to fetch users', error);
@@ -41,7 +41,7 @@ const UserList = () => {
       const newStatus = !currentStatus;
       await axios.patch(`http://localhost:3000/api/users/${userId}/status`, { isDisabled: newStatus });
       setUsers(users.map(user => 
-        user._id === userId ? { ...user, isDisabled: newStatus } : user
+        user?._id === userId ? { ...user, isDisabled: newStatus } : user
       ));
     } catch (error) {
       console.error('Failed to update user status', error);
@@ -61,12 +61,12 @@ const UserList = () => {
           },
         }
       );
-      alert(response.data.message); // Hiển thị thông báo khi nâng cấp thành công
+      alert(response.data?.message); // Hiển thị thông báo khi nâng cấp thành công
       setUsers(users.map(user => 
-        user._id === userId ? { ...user, role: 'admin' } : user
+        user?._id === userId ? { ...user, role: 'admin' } : user
       ));
     } catch (error) {
-      alert(error.response?.data.message || 'Lỗi khi nâng cấp tài khoản');
+      alert(error.response?.data?.message || 'Lỗi khi nâng cấp tài khoản');
     }
   };
 
@@ -90,28 +90,28 @@ const UserList = () => {
         </thead>
         <tbody>
           {users.map(user => (
-            <tr key={user._id}>
-                <td className="py-2">{user.fullName}</td>
-                <td className="py-2">{user.email}</td>
+            <tr key={user?._id}>
+                <td className="py-2">{user?.fullName}</td>
+                <td className="py-2">{user?.email}</td>
                 <td className="py-2">
-                  {user.role === 'admin' ? 'Admin' : 'Customer'}
+                  {user?.role === 'admin' ? 'Admin' : 'Customer'}
                 </td>
                 <td className="py-2">
-                    {user.isDisabled ? 'Đã vô hiệu hóa' : 'Đang hoạt động'}
+                    {user?.isDisabled ? 'Đã vô hiệu hóa' : 'Đang hoạt động'}
                 </td>
                 <td className="py-2 flex space-x-2">
                     <button
                     className={`px-2 py-2 rounded ${
-                        user.isDisabled ? 'bg-green-500' : 'bg-red-500'
+                        user?.isDisabled ? 'bg-green-500' : 'bg-red-500'
                     } text-white`}
-                    onClick={() => handleToggleStatus(user._id, user.isDisabled)}
+                    onClick={() => handleToggleStatus(user?._id, user?.isDisabled)}
                     >
-                    {user.isDisabled ? 'Kích hoạt' : 'Vô hiệu hóa'}
+                    {user?.isDisabled ? 'Kích hoạt' : 'Vô hiệu hóa'}
                     </button>
-                    {user.role !== 'admin' && (
+                    {user?.role !== 'admin' && (
                     <button
                       className="px-4 py-2 rounded bg-blue-500 text-white"
-                      onClick={() => handleUpgradeToAdmin(user._id)}
+                      onClick={() => handleUpgradeToAdmin(user?._id)}
                     >
                       <i class="fa-regular fa-hand-point-up"></i>
                     </button>

@@ -222,7 +222,7 @@ const ProductList = () => {         //{ onAddToCart }
           paginate={(pageNumber) => setCurrentPage(pageNumber)}
         />
       }
-      <ToastContainer/>
+      <ToastContainer limit={3}/>
     </div>
   );
 };

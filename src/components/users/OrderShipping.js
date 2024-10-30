@@ -108,7 +108,7 @@ const OrderShipping = () => {
           paginate={(pageNumber) => setCurrentPage(pageNumber)} // Cập nhật trang hiện tại
         />
       }
-      <ToastContainer />
+      <ToastContainer limit={3}/>
     </div>
   );
 };

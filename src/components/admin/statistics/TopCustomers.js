@@ -42,10 +42,10 @@ const TopCustomers = () => {
           <tbody>
             {topCustomers.map((customer, index) => (
               <tr key={index}>
-                <td className="px-4 py-2 border">{customer.customerInfo.fullName}</td>
-                <td className="px-4 py-2 border">{customer.customerInfo.email}</td>
-                <td className="px-4 py-2 border">{customer.totalSpent.toLocaleString()}</td>
-                <td className="px-4 py-2 border">{customer.orderCount}</td>
+                <td className="px-4 py-2 border">{customer?.customerInfo?.fullName}</td>
+                <td className="px-4 py-2 border">{customer?.customerInfo?.email}</td>
+                <td className="px-4 py-2 border">{customer?.totalSpent.toLocaleString()}</td>
+                <td className="px-4 py-2 border">{customer?.orderCount}</td>
               </tr>
             ))}
           </tbody>

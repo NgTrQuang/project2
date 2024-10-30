@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Pagination from '../../../common/Pagination';
 import * as XLSX from 'xlsx';
-import { saveAs } from 'file-saver';
+// import { saveAs } from 'file-saver';
 
 const LowStockProducts = () => {
   const [lowStockProducts, setLowStockProducts] = useState([]);
@@ -43,7 +43,27 @@ const LowStockProducts = () => {
     'Nâu': '#A52A2A',
     'Hồng': '#FFC0CB',
     'Tím': '#800080',
-  };
+    'Cam': '#FFA500',           
+    'Xanh lá cây': '#228B22',   
+    'Xanh quân đội': '#556B2F', 
+    'Be': '#F5F5DC',            
+    'Vàng chanh': '#FFD700',    
+    'Xanh ngọc': '#40E0D0',     
+    'Bạc': '#C0C0C0',          
+    'Xanh rêu': '#6B8E23',      
+    'Xanh navy': '#000080',     
+    'Đỏ rượu': '#8B0000',       
+    'Vàng cam': '#FFCC00',      
+    'Xanh olive': '#808000',   
+    'Xanh mint': '#98FF98',     
+    'Tím nhạt': '#D8BFD8',      
+    'Xanh lục nhạt': '#98FB98', 
+    'Hồng phấn': '#FF69B4',    
+    'Xanh pastel': '#B0E0E6',   
+    'Đỏ tươi': '#FF4500',      
+    'Xám tro': '#BEBEBE',
+    'Tím than': '#4B0082',       
+};
 
   // Tính toán trang
   const indexOfLastProduct = currentPage * productsPerPage;
@@ -54,11 +74,11 @@ const LowStockProducts = () => {
   // Chức năng tải file Excel
   const downloadExcel = () => {
     const data = lowStockProducts.map(product => ({
-      'Tên sản phẩm': product.name,
-      'Giá (VND)': product.price.toLocaleString(),
-      'Màu': product.variants.color,
-      'Size': product.variants.size,
-      'Còn lại': product.variants.stock,
+      'Tên sản phẩm': product?.name,
+      'Giá (VND)': product?.price.toLocaleString(),
+      'Màu': product?.variants?.color,
+      'Size': product?.variants?.size,
+      'Còn lại': product?.variants?.stock,
     }));
 
     const ws = XLSX.utils.json_to_sheet(data);
@@ -88,37 +108,39 @@ return (
           <tbody>
               {currentProduct.map((product, index) => (
               <tr key={index}>
-                  <td className="py-2 px-4 border">{product.name}</td>
+                  <td className="py-2 px-4 border">{product?.name}</td>
                   {/* <td className="py-2 px-4 border">
                   <img 
-                      src={product.image.length > 0 ? product.image[0] : product.image} 
-                      alt={product.name} 
+                      src={product?.image.length > 0 ? product?.image[0] : product?.image} 
+                      alt={product?.name} 
                       width={100} 
                   />
                   </td> */}
-                  <td className="py-2 px-4 border">{product.price.toLocaleString()}</td>
+                  <td className="py-2 px-4 border">{product?.price.toLocaleString()}</td>
                   <td className="py-2 px-4 border">
                       <span
                       className="inline-block mt-3 border border-gray-200 rounded-sm cursor-pointer shadow-sm"
                       style={{
-                          width: product.variants.color ? '24px' : '0', 
-                          height: product.variants.color ? '24px' : '0',
-                          backgroundColor: product.variants.color ? colorMapping[product.variants.color] : 'transparent',
+                          width: product?.variants?.color ? '24px' : '0', 
+                          height: product?.variants?.color ? '24px' : '0',
+                          backgroundColor: product?.variants?.color ? colorMapping[product?.variants?.color] : 'transparent',
                       }}
                       ></span>
                   </td>
-                  <td className="py-2 px-4 border">{product.variants.size}</td>
-                  <td className="py-2 px-4 border">{product.variants.stock}</td>
+                  <td className="py-2 px-4 border">{product?.variants?.size}</td>
+                  <td className="py-2 px-4 border">{product?.variants?.stock}</td>
               </tr>
               ))}
           </tbody>
       </table>
     )}
-    <Pagination 
-        totalPages={totalPages}
-        currentPage={currentPage}
-        paginate={(pageNumber) => setCurrentPage(pageNumber)} // Cập nhật trang hiện tại
-    />
+    {totalPages > 1 &&
+      <Pagination 
+          totalPages={totalPages}
+          currentPage={currentPage}
+          paginate={(pageNumber) => setCurrentPage(pageNumber)} // Cập nhật trang hiện tại
+      />
+    }
     <button
       onClick={downloadExcel}
       className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg"

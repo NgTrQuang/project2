@@ -15,9 +15,9 @@ const TopSellingProductsChart = () => {
         const response = await axios.get('http://localhost:3000/api/statistics/products/top-selling-products');
         const data = response.data;
 
-        const productNames = data.map(product => product.productName);
-        const quantitiesSold = data.map(product => product.quantitySold);
-        const productPrices = data.map(product => product.price);
+        const productNames = data.map(product => product?.productName);
+        const quantitiesSold = data.map(product => product?.quantitySold);
+        const productPrices = data.map(product => product?.price);
 
         setChartData({
           labels: productNames,

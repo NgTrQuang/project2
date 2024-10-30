@@ -15,8 +15,8 @@ const OrderStatusChart = () => {
         const response = await axios.get('http://localhost:3000/api/statistics/orders/status');
         const data = response.data;
 
-        const statuses = data.map(order => order._id); // Trạng thái đơn hàng (pending, shipped, etc.)
-        const counts = data.map(order => order.count); // Số lượng đơn hàng trong từng trạng thái
+        const statuses = data.map(order => order?._id); // Trạng thái đơn hàng (pending, shipped, etc.)
+        const counts = data.map(order => order?.count); // Số lượng đơn hàng trong từng trạng thái
         setChartData({
           labels: statuses,
           datasets: [

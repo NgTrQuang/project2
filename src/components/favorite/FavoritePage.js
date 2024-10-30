@@ -73,7 +73,7 @@ return (
         userId={userId}
         // handleAddToCart={handleAddToCart}
         />
-        <ToastContainer/>
+        <ToastContainer limit={3}/>
     </div>
   );
 };

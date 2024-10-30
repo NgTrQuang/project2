@@ -5,6 +5,7 @@ import QuantitySelector from '../products/QuantitySelector';
 import AddToCartButton from '../carts/AddToCartButton';
 import { useUserContext } from '../context/UserContext';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import RecommentProduct from './RecommentProduct';
 import SizeList from './SizeList';
 import ColorList from './ColorList';
@@ -32,7 +33,7 @@ const ProductDetails = () => {
       const response = await axios.get(`http://localhost:3000/api/products/${productId}`);
       setProduct(response.data);
       setLoading(false);
-      setSelectedImage(response.data.image[0]);
+      setSelectedImage(response.data?.image[0]);
     } catch (error) {
       setError('Không thể lấy chi tiết sản phẩm');
       setLoading(false);
@@ -65,7 +66,7 @@ const ProductDetails = () => {
   const handleNext = () => {
     const newIndex = (currentIndex + 1) % product?.image.length;
     setCurrentIndex(newIndex);
-    setSelectedImage(product.image[newIndex]);
+    setSelectedImage(product?.image[newIndex]);
   };
 
   // Hàm để lấy 5 ảnh liên tiếp với kiểu vòng tròn
@@ -190,7 +191,7 @@ const ProductDetails = () => {
           <h3 className="text-2xl font-medium mb-4">Sản phẩm gợi ý</h3>
           <RecommentProduct/>
         </div> */}
-      <ToastContainer/>
+      <ToastContainer limit={3}/>
     </div>
   );
 };

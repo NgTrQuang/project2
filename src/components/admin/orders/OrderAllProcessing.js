@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import Pagination from '../../../common/Pagination';
 
 const OrderAllProcessing = () => {
-  const { userId, user } = useUserContext(); // Lấy thông tin người dùng từ context
+  const { user } = useUserContext(); // userId, Lấy thông tin người dùng từ context
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -52,7 +52,7 @@ const OrderAllProcessing = () => {
     };
 
     fetchOrders();
-  }, [userId]);
+  }, [user]);
 
   if (loading) {
     return <div>Đang tải đơn hàng...</div>;
@@ -77,7 +77,7 @@ const OrderAllProcessing = () => {
 
   return (
     <div> 
-      <h3 className="text-lg font-bold">Đơn hàng đang xử lý</h3>
+      <h3 className="text-lg font-bold">Đơn hàng đã xác nhận</h3>
       {currentOrders.length > 0 ? currentOrders.map(order => (
         <div key={order?._id} className="border p-4 my-2">
         <p>Mã đơn hàng: {order?._id}</p>

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { useUserContext } from '../context/UserContext';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Checkout = () => {
     const location = useLocation();
@@ -143,7 +144,7 @@ const Checkout = () => {
             >
                 Xác nhận đặt hàng
             </button>
-            <ToastContainer/>
+            <ToastContainer limit={3}/>
         </div>
     );
 };

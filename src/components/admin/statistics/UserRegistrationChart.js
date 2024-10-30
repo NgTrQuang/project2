@@ -20,7 +20,7 @@ const UserRegistrationChart = () => {
         const registrations = new Array(12).fill(0); // Khởi tạo mảng với 12 giá trị bằng 0
 
         data.forEach(stat => {
-          registrations[stat._id - 1] = stat.count; // stat._id là số tháng (1-12)
+          registrations[stat?._id - 1] = stat?.count; // stat._id là số tháng (1-12)
         });
 
         setChartData({

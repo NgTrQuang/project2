@@ -209,7 +209,7 @@ const PersonalInfo = () => {
         </div>
         </form>
         </div>
-    <ToastContainer/>          
+    <ToastContainer limit={3}/>          
     </div>
   );
 };

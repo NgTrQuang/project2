@@ -16,10 +16,10 @@ const RevenueByMonthChart = () => {
         const response = await axios.get('http://localhost:3000/api/statistics/revenue-by-month');
         const data = response.data;
 
-        const months = data.map(item => `${item._id.month}/${item._id.year}`); // Tháng/Năm
-        const revenues = data.map(item => item.totalRevenue); // Tổng doanh thu của từng tháng
+        const months = data.map(item => `${item?._id?.month}/${item?._id?.year}`); // Tháng/Năm
+        const revenues = data.map(item => item?.totalRevenue); // Tổng doanh thu của từng tháng
         const totalYearlyRevenue = data.reduce((acc, item) => {
-            return acc + item.totalRevenue;
+            return acc + item?.totalRevenue;
         }, 0);
 
         setAllTotalRevenue(totalYearlyRevenue);

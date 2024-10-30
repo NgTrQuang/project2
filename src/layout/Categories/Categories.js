@@ -72,11 +72,11 @@ const Categories = () => {
         {categories.map((category, index) => (
           <div key={index} className={`flex flex-col md:flex-row bg-gray-50 rounded-md overflow-hidden group p-4 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
             <div className="md:w-1/2 flex justify-center items-center">
-              <img src={category.src} alt={category.alt} className="w-64 h-64 object-cover" />
+              <img src={category?.src} alt={category?.alt} className="w-64 h-64 object-cover" />
             </div>
             <div className="md:w-1/2 p-4 flex flex-col justify-center">
-              <h3 className="text-lg font-semibold text-gray-800">{category.label}</h3>
-              <p className="text-gray-600 mb-2">{category.description}</p>
+              <h3 className="text-lg font-semibold text-gray-800">{category?.label}</h3>
+              <p className="text-gray-600 mb-2">{category?.description}</p>
               <button
                 onClick={() => handleCategoryClick(categoriesMapping[index])}
                 className="inline-block mt-2 text-primary font-medium hover:underline"
